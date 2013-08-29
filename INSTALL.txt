@@ -1,0 +1,48 @@
+Installation Instructions
+  There are a couple pre-reqs before you can install this program.  You must have a working
+  -php enabled web server (only tested on apache/php)  PHP needs GD atleast although there may be other things.
+  -mysql database, ver 5+
+  
+  Only *nix servers are supported at this time (no Windows).  It's developed and well tested on FreeBSD, but should work with minor tweaks on any of the *nixes.
+  The client has only been tested and optimized for on Mozilla Firefox.  Internet explorer might work, but will likely look wierd.  You shouldn't use it anyway.
+  
+  To Install:
+    -extract the tarball into your web directory where you want it (like your www base directory).
+        tar -xzf tinCanJukebox.tar.gz
+            (Note, this will create a subdirectory called tincanjukebox in your current directory.  If that directory already exists (update mode)
+            this will overrwrite all files except those you've added and the lib/conf.php)
+    -create a new mysql catalog schema using mysql administrator or cmd line mysql 
+    -create a new mysql user and give them full priviledges on the new catalog.
+	(you can use a gui administrator or cmdline input similar to below.  Thanks Felix/Alex!)
+	mysql -u root -p
+	(log in with your root password)
+	mysql>create database jukebox;
+	mysql>use mysql;
+	mysql>grant all privileges on jukebox.* to '[tcj_user]'@'localhost' identified by '[mypassword]';
+	mysql>flush privileges;
+	
+    -copy lib/conf.php.default to lib/conf.php
+    -open lib/conf.php in a text editor and enter in the user/pass,catalog and web path info as specified
+    -open web browser and point to the web path.
+    -Follow the prompts for the database updates and enter an admin user when prompted.
+    -After all the updates are completed, click on the 'admin' section of the menu bar.
+    -In the 'system config' tab, enter the path to your music directory (System file path to the main catalog directory) and hit the tab key to save it.  This is the directory on the server where your music lives.  It does NOT need to be visible in your www folders, but just accessable by your WWW server.
+        This will also kick off the catalog update utility.  You may continue to set configs or browse the site while the catalog is updating.
+    -Enjoy!
+    
+  To update:
+    -copy the tarball into the parent directory of your current tincanjukebox www directory (like the www base directory).
+    -extract the tarball 
+        tar -xzf tinCanJukebox.tar.gz
+        This will overrwrite all exisiting files EXCEPT for your lib/conf.php and any files you've added (like lang_ files or css files).  It also adds
+        any new files.
+    -Open site in your web browser and login as the admin user.
+    
+        
+  Post problems to the forums at TinCanJukebox.com
+
+J
+    
+    
+    
+    

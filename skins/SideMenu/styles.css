@@ -1,0 +1,579 @@
+body{
+    background-color:white;
+    margin: 0 0;
+}
+
+/*Menu Bar Def*/
+.menu_bar{
+    font-size: 12px;
+    font-family: arial,Times,serif;
+    color: #504f4f;
+    border-collapse: collapse;
+    padding: 0pt;
+    margin: 0pt;    
+    text-align: center;
+}
+.menu_filler{
+    background-color:white;
+}
+.menu_unselected{
+    background-color:#D3D3D3;
+    border: 1pt solid Silver;
+    cursor: pointer;
+}
+.menu_selected{
+    background-color:#B5C6BE;
+    cursor: pointer;
+    color: Black;
+    /*border:1pt solid black;*/
+    border:thin outset gray;
+}
+.menu_bar td{
+    border: 1pt solid Silver;
+    border-collapse: collapse;
+}
+
+
+
+
+.sql{
+    font-size:14px;
+    font-family: "Times new Roman",Times,serif;
+    color:black;
+    font-weight:bolder;
+}
+.mainContentArea{
+    font-size: 14px;
+    /*font-family: "Times new Roman",Times,serif;*/
+    font-family:Arial,Helvetica,sans-serif;
+    color: #504f4f;
+    padding: 5px;
+}
+.randomBrowseList{
+	display:inline;
+}
+.playlistDetailDiv{
+    border:1px solid black;
+    font-size:14px;
+    font-family: "Times new Roman",Times,serif;
+    color:black;
+    height:300px;
+    width:400px;
+    overflow:auto;
+}
+.searchSongList{
+    border:1px solid black;
+    height: 500px;
+    width:700px;
+    overflow:auto;
+}
+.playNow{
+    font-size:12px;
+    color:black;
+    font-family:arial;
+    display:inline;
+}
+.addToPlayList{
+    font-size:12px;
+    color:#504f4f;
+    font-family:arial;
+    display:inline;
+}
+.search{
+    font-size:12px;
+    color:#504f4f;
+    font-family:arial;
+    display:inline;
+}
+.importAlbumArtLink{
+    font-size:12px;
+    color:#504f4f;
+    font-family:arial;
+    display:inline;
+}
+.browseItem{
+    font-size:11px;
+    color:#504f4f;
+    font-family:arial;
+    
+}
+
+.letterBrowseSelects{
+    display:inline;
+}
+.connectionStatus{
+    height:15px;
+}
+
+/*artistList*/
+.artistList_table{
+    padding:2px;
+}
+.artistList_name{
+    font-size:15px;
+    font-weight:bolder;
+    font-family: arial,Times,serif;
+    color:#504f4f;
+}
+.artistList_info{
+    font-size:11px;
+    font-family:arial;
+}
+.artistList_playRow{}
+/*playlists*/
+.playlist_title{
+    font-size:14px;
+    font-family: "Times new Roman",Times,serif;
+}
+.playlist_name{
+    font-weight:bolder;
+}
+.playlist_close{
+    font-size:10px;
+    font-family:arial;
+}
+.playlist_form{
+    font-size:12px;
+    font-family:arial;
+}
+.playlist_formPrompt{
+    font-size:12px;
+    font-family:arial;
+    text-align:right;
+}
+.playlist_table{
+    border:1px solid black;
+}
+.playlist_itemsTable TD {
+    border-top:1px solid black;
+}
+.playlist_editForm{
+    border: thin inset gray;    
+}
+
+
+/*album display*/
+.albumList_div{
+    text-align:left;
+    width:100%;
+}
+.alb_albumName{
+    font-size:14px;
+    color:black;
+    font-weight:bolder;
+}
+.alb_artistName{
+    font-size:12px;
+    color:Gray;
+    font-weight:bold;
+}
+.alb_genreName{
+    font-size:12px;
+    color:Gray;
+    font-weight:normal;
+    font-style:italic;
+}
+
+
+.np_BorderDiv{
+    /*overflow:auto;
+    height:600px;
+    max-height:600px;*/
+    width:250px;
+    max-width:250px;
+    border:1px solid gray;
+    background-color:#D3D3D3;
+}
+.np_dataTD{
+    border:1px solid gray;
+    font-size:10px;
+    font-family:arial;
+    color:gray;
+    width:100%;
+    background-color:#B5C6BE;
+}
+.np_table{
+    /*border:1px solid black;*/
+    width:100%;
+    padding:0px;
+}
+.np_song{
+    color:black;
+    font-weight:bold;
+    font-size:12px;
+}
+.np_artist{}
+.np_album{}
+.np_user{}
+.np_time{
+    display:inline;
+}
+.nowPlayingTitleDiv{
+    font-size:16px;
+    color:gray;
+    font-weight:bold;
+}
+
+.randomBrowseTitleDiv{
+    font-size:16px;
+    color:gray;
+    font-weight:bold;
+}
+/*Album list classes*/
+.albumArt{width:50px;height:50px;}
+.lg_albumartTD{width:200px;}
+.albumListTable{
+    width:95%;
+    padding-bottom:0px;
+    padding-left:5px;
+    padding-right:5px;
+    padding-top:0px;
+}
+.alphabet{
+    font-size:14pt;
+    font-weight:bold;
+    color:gray;
+}
+.alphabet_selected{
+    font-size:16pt;
+    font-weight:bolder;
+    color:Black;
+    text-decoration:underline;
+}
+.listingFunctions{
+    font-size:10pt;
+    color:Navy;
+}
+.listingContent{
+    font-size: 14pt;
+}
+.showAblumDetail{
+    font-size:10pt;
+    font-family:arial;
+    color:gray;
+    text-decoration: none;
+}
+.showAlbumDetailHover{
+    font-size:10pt;
+    font-family:arial;
+    color:gray;
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+
+
+.icon{/*arrow images, play, add...*/
+    border:thin gray outset;
+}
+.logo{/*logo image.*/
+    
+}
+.albumArtBorder{
+    border:thin gray outset;
+}
+.browse_title{
+    font-size:16pt;
+    font-weight:bold;
+}
+.prog_progressBarTable{
+    border:1px gray solid;
+    padding:0px;
+    border-collapse:collapse;
+}
+.prog_progressBar{
+    height:10px;
+    background-color:Chartreuse;
+    color:Chartreuse;
+}
+.prog_CancelText{
+    font-size:8px;font-weight:normal;color:Gray;
+}
+.divAsAHref{
+    font-size:10pt;
+    font-family:arial;
+    color:gray;
+    text-decoration: none;
+
+}
+.divAsAHrefHover{
+    font-size:10pt;
+    font-family:arial;
+    color:gray;
+    text-decoration: underline;
+    cursor:pointer;
+}
+
+.browseListing{
+    font-size: 14px;
+    font-family: "Times new Roman",Times,serif;
+    color: #504f4f;
+}
+.browseListingDetail{
+    border:none;
+}
+.browseListingDetail TD {border:none;}
+
+.configDesc{
+    border:1px black solid;
+    font-size:14px;
+    color: #504f4f;
+    font-weight:normal;
+    background-color:#B5C6BE;
+}
+
+.prefWrapper{
+    border:1px black solid;
+    background-color:#D3D3D3;/*#B5C6BE*/
+}
+.tiny{
+    font-size:9px;
+    font-family:arial;
+    color:Gray;
+}
+.smalItal{
+    font-size:10px;
+    font-family:arial;
+    color:Gray;
+}
+.medItal{
+    font-size:12px;
+    font-family:arial;
+    color:Gray;
+}
+
+
+.configTable{
+    width:100%;
+    background-color:#D3D3D3;/*#B5C6BE*/
+}
+.configTableName{
+    text-align:right;
+    width:100px;
+    border-right:1px gray solid;
+}
+.configTableDesc{
+    text-align:right;
+    border-left:1px gray solid;
+}
+.songList_table{
+    font-size: 12px;
+    color: #666666;
+    
+}
+
+
+.j_prettyBtn_text{
+    text-decoration: none;
+    font-size: 12px;
+    width:81px;
+    font-family: "Times New Roman", Times, serif;
+    cursor: pointer;
+    clear: both;
+    vertical-align: middle;
+}
+.j_prettyBtn_raised{
+    background-image: url(images/j_prettyBtn_raised.gif);
+    width: 81px;
+    height: 37px;
+    text-align: center;
+    vertical-align: middle;
+}
+.j_prettyBtn_hover{
+    background-image: url(images/j_prettyBtn_hover.gif);
+    width: 81px;
+    height: 37px;
+    text-align: center;
+    vertical-align: middle;
+}
+.j_prettyBtn_pressed{
+    background-image: url(images/j_prettyBtn_pressed.gif);
+    width: 81px;
+    height: 37px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+
+/*SideTab listing display*/
+.sideTab_backgroundedTab{
+	background-color:#D3D3D3;/*#B5C6BE*/
+	border-right: 1px Black solid;
+	border-left: 1px Gray solid;
+	border-bottom: 1px Gray solid;
+	border-top: 1px Gray solid;
+	white-space: nowrap;
+	text-transform: capitalize;
+	empty-cells: show;
+	text-align: right;
+	cursor: pointer;
+	border-collapse: collapse;
+	height:15px;
+	max-height:15px;
+	min-height:15px;
+        padding-right:5px;
+	padding-left:5px;
+	width:150px;
+        max-width:150px;
+        min-width:150px;
+        
+}
+.sideTab_scrollDisabled{
+	border-right: 1px Black solid;
+	height:16px;
+	padding-right:5px;
+	padding-left:5px;
+}
+.sideTab_scrollEnabled{
+	border-right: 1px Black solid;
+        height:16px;
+	padding-right:5px;
+	padding-left:5px;
+        cursor: pointer;
+	vertical-align:top;
+}
+
+.sideTab_fillerCell{
+	border-right: 1px Black solid;
+}
+.sideTab_fillerCellTop{
+        border-right: 1px Black solid;
+        height:1px;
+        font-size:1px;/*There's a space in there to trigger td display for netscape...*/
+}
+.sideTab_padCell{
+	background-color: #D3D3D3;
+	border-bottom: 1px solid Gray;
+	border-left: 1px solid Gray;
+	border-right: 1px solid black;
+	border-top: 1px solid Gray;
+	border-collapse: collapse;
+	font-size: 1px;
+}
+
+.sideTab_foregroundedTab{
+	background-color:#B5C6BE;
+	white-space: nowrap;
+	text-transform: capitalize;
+	empty-cells: show;
+	text-align: right;
+	border-right: 1px #B5C6BE solid;
+	border-bottom: 1px solid Black;
+	border-left: 1px solid Black;
+	border-top: 1px solid Black;
+	cursor: pointer;
+	border-collapse: collapse;
+	height:15px;	
+	max-height:15px;
+        padding-right:5px;
+	padding-left:5px;
+}
+.sideTab_contentTD{
+	border-top: 1px solid Black;
+	border-right: 1px solid Black;
+	border-bottom: 1px solid Black;
+        vertical-align:top;
+        text-align: left;
+	min-width:310px;
+        width:100%;
+	background-color:#B5C6BE;
+	/*overflow:auto;*/
+}
+.sideTab_contentArea{
+	background-color: #B5C6BE;
+	vertical-align: top;
+	padding:4px;
+	min-height:500px;
+	min-width:300px;
+	width:98%;
+	overflow:auto;
+}
+.sideTab_tableTD{
+	background-color: #B5C6BE;
+	border-collapse: collapse;
+	height:15px;
+	width:150px;
+	max-width:150px;
+	min-width:150px;
+}
+.sideTab_table{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	width:100%;
+	
+}
+
+/*Not all of the following are actually used...*/
+
+
+.j_printTable{/*standard table style for printing query results*/
+	border-collapse:collapse;
+	border: 1px Silver solid;
+
+	/*border-bottom: 1px Silver solid;
+	border-right: 1px Silver solid;*/
+	padding:0px 0px 0px 0px;
+
+}
+.j_printTable_onMouseOver{
+	background-color:#E7F1E7;
+}
+.j_printTable_onMouseOut{
+	background-color:transparent;
+}
+.j_printTable td{
+	/*border: 1px Silver solid;
+*/
+	border-top: 1px Silver solid;
+	border-left: 1px Silver solid;
+	font-family: "MS Sans Serif", Geneva, sans-serif;
+	color:#515151;
+	font-size:8px;
+}
+.j_printTable_red{
+	background-color:#FE3044;
+}
+.j_printTable_green{
+	background-color:#00FF80;
+}
+.j_printTable th{
+	font-weight: bold;
+	/*background:#a8a8a8;*/
+	background-image: url("images/title-bg_light.gif");
+	border: 1px Silver solid;
+	padding: 2px 2px 2px 2px;
+	text-align: center;
+	vertical-align: top;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	white-space: nowrap;
+	text-transform: capitalize;
+}
+html>body tbody.scrollContent{/*add scroll for firefox. probably should make this conditional*/
+	height:195px;
+	overflow: auto;
+}
+.text{ font-size: 14px;color: #666666;}
+.textbox {color: #666666}
+.textboxPrompt {font-size: 14px;color: #666666; background-color: #FFFFFF; text-align: right}
+.formPrompt{font-size: 14px;color: #666666; background-color: #FFFFFF; text-align: right; border:1px solid black;}
+
+h3{color: #666666;font-size:18px;}
+a:link {color: Navy; text-decoration: none;font-weight: bold;}
+a:visited {color: Navy; text-decoration: none;font-weight: bold;}
+a:hover {font-weight: bolder; color: Navy; text-decoration: underline}
+a:active {font-weight: bolder; color: Navy; text-decoration: underline}
+
+a.j_href_btn:link {font-size: 12px;	font-weight: lighter;	text-decoration: none;	border: 1px outset #424242;	padding: 4px 4px 4px 4px;	color: Navy;}
+a.j_href_btn:visited {font-size: 12px;	font-weight: lighter;	text-decoration: none;	border: 1px outset #424242;	padding: 4px 4px 4px 4px;	color: Navy;}
+a.j_href_btn:hover {font-size: 12px;font-weight: lighter;	text-decoration: none;	border: 1px outset Lime;	padding: 4px 4px 4px 4px;	color: Lime;}
+a.j_href_btn:active {font-size: 12px;	font-weight: lighter;	text-decoration: none;	border: 1px inset Red;		padding: 4px 4px 4px 4px;	color: Red;}
+a.j_href_btn2:link {font-size: 12px;	font-weight: lighter;	text-decoration: none;	padding: 4px 4px 4px 4px;	color: Navy;}
+a.j_href_btn2:visited {font-size: 12px;	font-weight: lighter;	text-decoration: none;	padding: 4px 4px 4px 4px;	color: Navy;}
+a.j_href_btn2:hover {font-size: 12px;font-weight: lighter;	text-decoration: none;	border: 1px outset Teal;	padding: 4px 4px 4px 4px;	color: #166C16;}
+a.j_href_btn2:active {font-size: 12px;	font-weight: lighter;	text-decoration: none;	border: 1px inset Red;	padding: 4px 4px 4px 4px;	color: #CF2727;}
+
+
+ 
+ 

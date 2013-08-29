@@ -1,0 +1,17 @@
+This is a quick guide to getting you going on creating a new skin.
+
+-Don't edit the files in the skins/Default directory.
+If you want to make a new skin, or alter this one, copy the whole directory (skins/Default) and name as you please (in the skins/ directory).
+Then you can edit the styles.css, layout_template.php and all images.
+
+-styles.css is the main css file that controls, well, css stuff.  Anyone who's even moderately talented at web design will likely laugh at the programmer's css/layout skills (that's why I'm a programmer and not a designer).  Feel free to send helpful suggestions to john@tincanjukebox.com
+-layout_template.php gives you power over the layout of the entire site.  Each content area is stubbed in this file as a div which gets loaded dynamically as appropriate.  You should keep all the divs that are in the file currently, but can move them around at will.  I included 2  layouts as examples.
+-the images directory contains all the images and icons used in the site.  Feel free to replace any you wish, including the logo (further proof that I'm a programmer, not designer :).  There's no need to reference tcj in anyway.. use it however you want.
+
+The new folder will show up as a choice in every user's preferences.
+If you want to set your new skin as the default for all users, goto the admin->preference defaults tab and select your new skin.
+Please consider sharing your uber cool creation with the rest of us :)
+Send the whole dir as a zip to john@tincanjukebox.com to be included in new releases/posted on the web site.
+
+J
+

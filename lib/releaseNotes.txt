@@ -1,0 +1,147 @@
+20121111
+-Fixed some glitches with the tab browsing scroll functions.
+-Enabled single line scrolling in the sidetab widget
+-Enabled mousewheel scrolling in the sidetab widget (scroll list of artists/albums with mouse wheel)
+-fixed the few files that were still using lazy php tags (<? instead of <?php)
+-Added the JW Player (popup).
+
+20111218
+-Added support for mp4/m4a/aac files (requires faad and lame to be installed and paths set correctly in the system configs).
+-Fixed a couple issues in the catalog import functions.
+-Fixed a bug in the user management that could prevent users from changing passwords.
+-Fixed a bug in the user management that kept the 'add' button from working on some browsers.
+-Updated the syntax for the google I'm Feeling Lucky searches of Wikipedia so they work again (album/artist wikipedia searches).
+-Made some general improvements to the language modules, although this is still a work in progress.
+-Added initial support to play playlists 'in order' instead of the default random (thanks Woody).
+
+20110102
+-Many excellent improvements, bug fixes and backwards compatibility tweaks (mysql 4.1+) courtesy of a new contributor Alain.  Many thanks for his work!
+    -Updated default preferences to more general case uses
+    -Added DB support for allowed music extension
+    -Added a new browse by 'all' option in album, artist and genre browse modes.
+    -Improved the import logic to handle multiple albums in a single folder
+    -Tweaked SQL to allow for mysql 4.1+ compatibility
+    -Improved the update catalogs function to include catalogs with inserted/deleted files
+    -Added the orphaned file (deletions) update logic to the periodic table optimization logic.
+    -Several bug fixes, typo corrections and layout improvements.
+    
+
+20100224
+-Skins! Added/redesigned skinning support.  Revamped all kinds of things to enable easy skinning support.  All of you budding artistic types can now easily change the layout and css of the site by creating a new skin directory.  See skins/Skinning Howto.txt for details.  
+-Added ability to play PLS formatted playlists.
+-Added the most excellent flash based JWPlayer (non-commercial use only) with some nice visuals.
+-Improved the language support to better handle out of date translations of list items (overrides from master english lists).
+-Improved the album art import logic to look for art in the song's tags if none found in the album directory.
+-Added the ability to add a song from the now playing display to a playlist.
+-Added ability to view the most recent log file in the admin section.
+-Increased the logging verbosity during catalog updates to help identify files that cause problems.
+-Various layout tweaks.
+
+20091108
+-Improved the catalog update logic to look at file's ctime (inode change time) as well as mtime when looking for files to import.  This allows it to catch files that may have been created earlier (prior to last catalog update) and then just mv'd into the catalog directory.
+-Fixed (worked around) a glitch some of the xspf flash players where the time bar went over the edge of the player
+-Enabled support for OGG files
+-Enabled support for FLAC files
+-Added ability to transmorgify (and downsample when needed) ogg files into mp3 streams on the fly (requires oggdec and lame)
+-Added ability to transmorgify (and downsample when needed) flac files into mp3 streams on the fly (requires flac and lame)
+-Re-architected the streaming logic to allow instream seeks (http range support)
+-Fixed downsampling reported size logic to make the downsampling logic work much better on a variety of players.
+-Fixed a bug where the last selected browse item (artist, album, genre) wouldn't be remembered until a user set atleast 1 other preference.
+
+
+20091008
+-Added the ability to import album art from a url (from the album detail page when admin is logged in).. Tried to automate the import of album art but couldn't find an image source/web site whose license would let me :(
+-Added a few different album art search links when importing album art (wikipedia, amazon, google, bing, yahoo).
+-Added an Admin->Catalog function to browse by albums without album art.
+-Split the logic that pre-caches re-sized album art from the music import logic to allow the music library.
+-Added a config option to limit the number of images that get pre-cached with each library update.
+
+20090923
+-Misc. bug fixes and layout tweaks.
+-Re-programmed image cache logic to use php functions that are supported on older php installations.
+-Added search links to wikipedia when displaying artists and albums.
+-Reprogrammed interface with getID3 (the tag reader) to be more effecient and to avoid an apparent memory leak.
+
+20090817
+-Added a user preference for Max Bitrate. This allows bandwidth impaired users to downsample their streams to fit available bandwith.
+-Fixed a bug in the downsample logic that sometimes caused it to get bypassed.
+-Improved/corrected the logic that displays the current value of the user preferences when the sys admin has set a preference default.
+-Added the initial German translation (Thanks Johannes)
+-Fixed a potential sql injection vulnerability (Thanks SJ)
+-Fixed a glitch in the catalog logic that could allow a file to be added twice.
+
+
+20090430
+-Fixed a bug when searching for song names containing special characters (Thanks D)
+-Changed the catalog update logic to skip hidden songs (.file)
+-Added several skinned versions of the excellent xspf_jukebox by Lacy Morrow.  Some play embedded in the same window, others are in a popup window.  Users can choose output method in the preferences section.
+-Fixed a display glitch in the side tabs browsing thing that made the tabs get huge when there were too many items being displayed
+-Collapsed css files into 1 user changeable css file to allow easier skinning.
+-Fixed a catalog maintenance bug that didn't delete orphaned albums, artists & genres (Thanks Rodrigue)
+-Fixed a catalog maintenance bug that didn't display the number of artists added/updated.
+-Added an initial French translation (Thanks Rodrigue & G-rom)
+-Several layout tweaks to fix differences due to browser client.
+
+
+
+20090330
+-Added phase 2 of the album art image cache.  Images will now be resized to the various needed formats and stored in the db for faster retrieval.
+-Added logic to the catalog update to cache albumart images.
+-Added logic to do a one-time pre-cache of album art for servers that are upgrading.
+-Added button on the Admin->catalog screen to recache all album art if needed.
+-Re-coded the image retrieval logic to reduce the amount of work being done, make it more efficient & and speed up the processing (30-70% depending on the details).
+-Added logic to the catalog update to look for other jpg images if the default album art image isn't present (thanks anon).
+-Added button on the Admin->catalog screen to resync all files.
+-Added the ablity to auto update the music catalog periodically when the admin logs in (and added a system config to disable).
+-Added the ability to optimize all the db tables (Admin->Catalog).
+-Added the ability to auto optimize the db tables periodically (and added a system config to disable).
+-Added logic to the catalog update utility to remove songs from the db if the file has been deleted (only in the 'force' mode).
+-Improved the update catalog statistics to be more accurate.
+-Improved logging and diagnostic output.
+-Added a config to set logging verbosity level.
+-Added logic to rotate and archive the log files so they don't get too large.
+-Various bug fixes and improvements.
+
+20090315
+-Added the ability to auto-detect the site address,alternate port and path.  Values set in lib/conf.php now override the auto detected values if needed.
+-Added a user preference to turn off the display of Album Art in the Now Playing list and while browsing your music collection.
+-Added initial cacheing support to allow browsers to cache dynamcially created images (album art).  Further cacheing enhancements to come after more useage testing.
+-Cleaned up layout/norm_template.php to make it easier for some ambitious skinner to reflow the basic layout of the site.
+-Improved the search engine to allow multi word searches ('bob marley') and multi partial word searches ('bob mar','b marley','b m').
+-Improved the search engine to order results by most likely match using the mundonian precedence algorithm.
+
+20090304
+-Improved/fixed display of song search results.
+-When displaying an album's songs in various places, the artist name is now a link to the artist browse page.
+-Improved the album detail display.
+-Added ability to play everything in an embedded flash player so that no external mp3 player is needed.
+-Added a preference (playMethod) to set whether music should play through the embedded flash player or by opening a playlist on the local machine (default)
+-Added 'Random artists' tab to the home page random items object.
+-Added a user preference to set which random tab to start with on the home page.
+-When browsing by artist, if the artist has no albums, the 'Unattached Songs' header is skipped (so it just prints the songs).
+-Added ability to auto-login a user, bypassing all security checks.  This is for cases like when you want to demo your music or are on an intranet and do not
+    want to force logins.
+
+20090219
+-added ability to set user privileges(rights) in the system administration module
+-added privilege for whether a user can download playlists
+-added ability to download playlists (tarball).
+-improved the js logic for the sidetab ajax window object so that you can have multiple tabbed windows displayed at the same time.
+-added a new random album tab; Recently Added albums
+-added a system config to specify how many items constitues 'recent' when displaying random recently added albums or browseing by recent albums/artists.
+-added a 'new' link to the alphabet list when browseing by artist or album that lets you see the most recently added items.
+-fixed a bug in security mechinism that allowed 'remembered' logins to bypass password changes.  Oops, bad programmer.  No doughnuts for you.  All users will need to reauthenticate after this update.
+-fixed a bug in the playback logic that didn't correctly escape some filenames when downsampling.
+-Added playlist detail of all the items in a playlist next to the summary when a user browses by playlist.
+-Several minor layout and js content tweaks.
+
+20090202
+-Fixed the blank Admin->users tab so it shows the proper link to the user administration module.
+-Added a system administrator's statistics tab (Admin->Site stats) showing a variety of database useage statistics.
+-When you set or change the music library folder path, a catalog update immeadiately launches
+-Added ability to display version update notifications to the admin user
+-Added ability to send anonymous statistics
+-Reworked the DB Update Utility logic and output.
+-Added the ability to prompt for default value on new configuration items (first used on the anon stats function).
+-Various graphics tweeks.
+-Miscellaneous bug fixes.

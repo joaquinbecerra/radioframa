@@ -1,0 +1,12 @@
+This is a quick guide to getting you going on creating a new skin.
+
+-Don't edit the files in the skins/Default directory.
+If you want to make a new skin, or alter this one, copy the whole directory (skins/Default) and name as you please (in the skins/ directory).
+Then you can edit the styles.css, layout_template.php and all images.
+The new folder will show up as a choice in every user's preferences.
+If you want to set your new skin as the default for all users, goto the admin->preference defaults tab and select your new skin.
+Please consider sharing your uber cool creation with the rest of us :)
+Send the whole dir as a zip to john@tincanjukebox to be included in new releases/posted on the web site.
+
+J
+
