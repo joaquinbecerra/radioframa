@@ -7,8 +7,8 @@
 
 
 ;Mysql user/password/db.  You must set up a user that can admin a db in mysql.  Enter the user/pass/db(schema) below.  Your web users for tcj are handled in the application.
-username = "root"
-password = ""
+username = "jukebox"
+password = "jukebox"
 defaultDB = "jukebox"
 
 
@@ -33,7 +33,7 @@ defaultDB = "jukebox"
 ;music or are on an intranet).  You need to login as an administrator first so you can create a user to be the 'auto-logged in user' and
 ;then copy that ID(listed in the user admin) and enter that below.
 ;If you want to admin the site, you'll have to comment out below and then log in as admin.  
-;autoLoginUser=;
+;autoLoginUser=10;
 
 ;Rename this file to conf.php after you are done.
 

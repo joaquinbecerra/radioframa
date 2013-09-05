@@ -128,6 +128,10 @@ switch ($doWhat){
         $searchType=scrubTextIn($_REQUEST['search_type'],1);
         echo doSearch($searchVal,$searchType);
         break;
+    case "rf_doSearch":
+        $searchVal=scrubTextIn($_REQUEST['search_val'],2);//Loose filtering.
+        echo rf_doSearch($searchVal);
+        break;
 /*Browsing Stuff*/
     case "getRandomList";
         echo getRandomList($type);
@@ -190,7 +194,11 @@ switch ($doWhat){
         require_once("lib/playlist_functions.php");
         echo getPlaylistDetail($id);
         break;
-    
+    case "rf_getPlaylistDetail":
+        require_once("lib/playlist_functions.php");
+       // header('Content-Type: application/json');  
+        echo rf_getPlaylistDetail();
+        break;
     case "getDivContent":
         echo $_REQUEST['content'];
         break;
@@ -431,6 +439,10 @@ switch ($doWhat){
     case "addToPlaylist":
         require_once("lib/playlist_functions.php");
         echo addItemToPlaylist($type,$id,true);
+        break;
+    case "rf_addToPlaylist":
+        require_once("lib/playlist_functions.php");
+        echo addItemToPlaylist('song',$id,true);
         break;
     case "savePlaylist":
         require_once("lib/playlist_functions.php");
