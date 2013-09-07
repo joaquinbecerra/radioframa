@@ -91,6 +91,14 @@ function deletePlaylistItem($seqNum){
     session_write_close();
     return $html;
 }
+
+function rf_loadPlaylistDef(){
+    $res=dosql("select playlistID from playlists where name='radioframa'",1);
+    $id=$res['playlistID'];
+    if ($id)
+        loadPlaylistDef($id);
+}
+
 function loadPlaylistDef($playlistID){//loads the current list into a local array.  If none exists, creates one and stores it in the session.
     $pl=false;
     session_start();
@@ -217,7 +225,9 @@ function addItemToPlaylist($type,$id,$returnJS=false){
                 $name=dosql("select description as name from genres where genreID=$id",0);
                 break;
         }
+       
         if($type && $id && $name){
+           
             $item=array('playlistItemID'=>'','itemType'=>$type,'itemID'=>$id,'itemName'=>$name);
 	    $items[]=$item;
             $pl['plItems']=$items;

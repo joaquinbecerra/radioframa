@@ -374,6 +374,67 @@ function getNowPlaying($lastID) {
     return $html;
 }
 
+function rf_getNowPlaying($lastID) {
+    //First do a little cleanup on the table if needed.
+    $recentness = _conf("nowPlayingRecentness");
+    $recentness = ($recentness > 0) ? $recentness : 60; //Preferences should be programmed to prohibit neg numbers, but hasn't been yet...
+    $recentness = ($recentness > 0) ? $recentness : 60; //Preferences should be programmed to prohibit neg numbers, but hasn't been yet...
+###    dosql("delete from nowPlaying where timestampdiff(MINUTE,startTime,CURRENT_TIMESTAMP)>$recentness");//Prune out old entries.
+    dosql("delete from nowPlaying where date_add(startTime, interval $recentness minute)<now()"); //Prune out old entries.
+    //Now fetch out the remaining.
+    bldsql_init();
+    bldsql_from("users u");
+    bldsql_from("songs s");
+    bldsql_from("nowPlaying np");
+    bldsql_where("u.userID=np.userID");
+    bldsql_where("s.songID=np.songID");
+    bldsql_orderby("np.id desc");
+    bldsql_col("u.userName");
+    bldsql_col("s.songName");
+    bldsql_col("(select alb.name from albums alb, albums_songs albs where alb.albumID=albs.albumID and albs.songID=s.songID) as albumName");
+    bldsql_col("(select art.name from artists art, artists_songs arts where art.artistID=arts.artistID and arts.songID=s.songID) as artistName");
+### timestampdiff unknown in sql prior v5
+    /*    $timeCol="case  when timestampdiff(SECOND,np.startTime,now())=1 then concat(timestampdiff(SECOND,np.startTime,now()),' second ago')
+      when timestampdiff(SECOND,np.startTime,now())<60 then concat(timestampdiff(SECOND,np.startTime,now()),' seconds ago')
+      when timestampdiff(MINUTE,np.startTime,now())=1 then concat(timestampdiff(MINUTE,np.startTime,now()),' minute ago')
+      when timestampdiff(MINUTE,np.startTime,now())<60 then concat(timestampdiff(MINUTE,np.startTime,now()),' minutes ago')
+      when timestampdiff(HOUR,np.startTime,now())=1 then concat(timestampdiff(HOUR,np.startTime,now()),' hour ago')
+      else concat(timestampdiff(HOUR,np.startTime,now()),' hours ago') end";
+     */
+    $timeCol = "case  when floor(time_to_sec(timediff((now()),np.startTime)))=1 then concat(floor(time_to_sec(timediff((now()),np.startTime))),' second ago')
+                    when floor(time_to_sec(timediff((now()),np.startTime)))<60 then concat(floor(time_to_sec(timediff((now()),np.startTime))),' seconds ago')
+                    when floor((time_to_sec(timediff((now()),np.startTime)))/60)=1 then concat(floor((time_to_sec(timediff((now()),np.startTime)))/60),' minute ago')
+                    when floor((time_to_sec(timediff((now()),np.startTime)))/60)<60 then concat(floor((time_to_sec(timediff((now()),np.startTime)))/60),' minutes ago')
+                    when floor((time_to_sec(timediff((now()),np.startTime)))/3600)=1 then concat(floor((time_to_sec(timediff((now()),np.startTime)))/3600),' hour ago')
+                    else concat(floor((time_to_sec(timediff((now()),np.startTime)))/3600),' hours ago') end";
+    bldsql_col($timeCol . " as time");
+    bldsql_col("(select alb.albumID from albums alb, albums_songs albs where alb.albumID=albs.albumID and albs.songID=s.songID) as albumID");
+    bldsql_col("(select art.artistID from artists art, artists_songs arts where art.artistID=arts.artistID and arts.songID=s.songID) as artistID");
+    bldsql_col("s.songID");
+    bldsql_col("np.id as npID");
+
+    //$limit = (_conf("numNowPlayingItems") > 0) ? _conf("numNowPlayingItems") : 10; //conf doesn't support number limits yet, so make reasonable
+    $limit = 1;
+    $a = dosql(bldsql_cmd() . " limit " . $limit);
+    if ($a) {
+        extract($a);
+        
+        $res=array();
+        $res['songName']=$songNames[0];
+        $res['songID']=$songIDs[0];
+        $res['albumID']=$albumIDs[0];
+        $res['artistName']=$artistNames[0];
+        $res['albumName']=$albumNames[0];
+        $res['userName']=$userNames[0];
+        
+        echo json_encode($res);
+        return;
+        
+       
+    }
+    return;
+}
+
 /* browsing stuff */
 
 function getBrowsePage($type, $filter, $selectedID = "", $maxRows = 25, $letterFilter = true, $useHaystack = false) {/* Returns html for a nicely formatted alphabetic browse list.  

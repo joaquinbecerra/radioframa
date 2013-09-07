@@ -120,6 +120,9 @@ switch ($doWhat){
     case "nowPlaying":
         echo getNowPlaying($id);
         break;
+    case "rf_nowPlaying":
+        echo rf_getNowPlaying($id);
+        break;
     case "getRandomBrowsingTabObj":
 	echo getRandomBrowsingTabObj();
 	break;

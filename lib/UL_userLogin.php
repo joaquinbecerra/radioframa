@@ -182,7 +182,7 @@ function UL_checkAuth($moduleName,$allowStoredCookieLogin=true,$usersTableName="
 		}else{
 			$cookieCheckBox=($allowStoredCookieLogin)?"<input type='checkbox' name='UL_setCookie' value='1'><font color='#5B769D'>Remember login</font>":"&nbsp";
 			$html.="<font color-='red'>&nbsp $errMsg &nbsp</font>
-			<h3><font color='Navy'>Please Login.</font></h3>
+			<h3><font color='Navy'>Please Login</font></h3>
 			<form action='".$_SERVER['PHP_SELF']."' method='post' name='UL_defaultForm'>
 				<input type='hidden' name='UL_gotoPage' value='$UL_gotoPage'>
 				<input type='hidden' name='UL_queryString' value='$UL_queryString'>
