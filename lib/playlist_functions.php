@@ -99,6 +99,44 @@ function rf_loadPlaylistDef(){
         loadPlaylistDef($id);
 }
 
+function rf_getPlaylistAdmin(){
+    $playlist=Array();
+//    session_start();
+//    if(isset($_SESSION['pl'])){
+    $sql="select
+    s.songID as songId,
+    p.seq as seq,
+    s.songName as songName,
+    s.file as file,
+    s.albumNameFromTag as albumName
+from
+    playlistItems p,
+    playlists pl,
+    songs s
+where
+    pl.name = 'radioframa' and 
+    p.itemType = 'song'
+    and p.itemID = s.songID
+    and pl.playlistID=p.playlistID
+order by seq";
+     $a=dosql($sql);
+            if($a){
+                extract($a);
+                $res=Array();
+                foreach($songIds as $i=> $val ){
+                    
+                    $res[]=Array( 'title' => $songNames[$i],
+                        'album'=>$albumNames[$i],
+                         'filename'=> str_replace(realpath(__DIR__.'/..').'/','',strrev(stripcslashes($files[$i]))),
+                        'dir'=>realpath(__DIR__.'/..')
+                        );
+                    
+                }
+                
+            }
+     return json_encode($res);
+}
+
 function loadPlaylistDef($playlistID){//loads the current list into a local array.  If none exists, creates one and stores it in the session.
     $pl=false;
     session_start();
