@@ -435,6 +435,16 @@ function rf_getNowPlaying($lastID) {
     return;
 }
 
+
+function rf_updateNowPlaying($songId) {
+    
+    $uid=UL_UID+0;
+    dosql("insert into nowPlaying 
+             select 0,now(),1,$uid,songLength, songid from songs where songid=$songId"); //Prune out old entries.
+    return;
+}
+
+
 /* browsing stuff */
 
 function getBrowsePage($type, $filter, $selectedID = "", $maxRows = 25, $letterFilter = true, $useHaystack = false) {/* Returns html for a nicely formatted alphabetic browse list.  

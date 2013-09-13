@@ -29,7 +29,6 @@ if(_conf("isDemoSystem")){
 }
 
 require_once("lib/loadConfigs.php");
-
 //Check to see if updates are needed (only when admin logs in though).  These would be any subsequent updates  after the initial handled above.
 //Same inital page filter as above.
 $currDbVersion=_conf("dbVerNum");
@@ -122,6 +121,9 @@ switch ($doWhat){
         break;
     case "rf_nowPlaying":
         echo rf_getNowPlaying($id);
+        break;
+    case "rf_updatenowPlaying":
+        echo rf_updateNowPlaying($id);
         break;
     case "getRandomBrowsingTabObj":
 	echo getRandomBrowsingTabObj();

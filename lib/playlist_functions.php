@@ -68,14 +68,15 @@ function saveTempList($pl){
     return false;
 }
 //Playlist delete isnt working right.  Something where deletes aren't always deleted from db list.  Needs more testing.
-function deletePlaylistItem($seqNum){
+//function deletePlaylistItem($seqNum){
+function deletePlaylistItem($id){
     //delete item from current playlist.
     $html=sendStatusMssgHTML("There was an error removing this item.");
     session_start();
     if(isset($_SESSION['pl'])){
         $pl=$_SESSION['pl'];
         $items=$pl['plItems'];
-        $id=$items[$seqNum]["playlistItemID"];
+        //$id=$items[$seqNum]["playlistItemID"];
         //return sendStatusMssgHTML($id);
         $ok=true;
         if($id){//real playlist, do delete.
@@ -105,6 +106,7 @@ function rf_getPlaylistAdmin(){
 //    if(isset($_SESSION['pl'])){
     $sql="select
     s.songID as songId,
+    p.playlistitemID as itemId,
     p.seq as seq,
     s.songName as songName,
     s.file as file,
@@ -128,7 +130,8 @@ order by seq";
                     $res[]=Array( 'title' => $songNames[$i],
                         'album'=>$albumNames[$i],
                          'filename'=> str_replace(realpath(__DIR__.'/..').'/','',strrev(stripcslashes($files[$i]))),
-                        'dir'=>realpath(__DIR__.'/..')
+                        'songId'=>$songIds[$i],
+                        'itemId'=>$itemIds[$i]
                         );
                     
                 }

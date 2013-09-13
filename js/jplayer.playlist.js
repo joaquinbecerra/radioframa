@@ -74,7 +74,6 @@
             self._init();
             var onPlayNowChange = self.option('onPlayNowChange');
             if (onPlayNowChange && $.isFunction(onPlayNowChange)) {
-                console.log(current);
                 onPlayNowChange();
             }
         });
@@ -310,13 +309,15 @@
             // Create live handlers for the remove controls
             $(this.cssSelector.playlist).off("click", "a." + this.options.playlistOptions.removeItemClass).on("click", "a." + this.options.playlistOptions.removeItemClass, function() {
                 var index = $(this).parent().parent().index();
-                self.remove(index);
-                
                 var onRemove = self.option('onRemove');
                 if (onRemove && $.isFunction(onRemove)) {
 
                     onRemove(index);
                 }
+                
+                self.remove(index);
+                
+                
                 
                 $(this).blur();
                 return false;
