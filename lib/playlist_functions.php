@@ -80,7 +80,8 @@ function deletePlaylistItem($id){
         //return sendStatusMssgHTML($id);
         $ok=true;
         if($id){//real playlist, do delete.
-            $ok=dosql("delete from playlistItems where playlistItemID=".$id);
+            $ok=dosql("delete from playlistItems where seq=".$id);
+            $ok=dosql("update playlistItems set seq=seq-1  where seq > ".$id);
         }
         if($ok){//either a templist or delete worked.
             unset($items[$seqNum]);
@@ -138,6 +139,28 @@ order by seq";
                 
             }
      return json_encode($res);
+}
+
+function rf_upPlaylistItem($seq){
+    
+   session_start();
+   $playlistID=$_SESSION['pl']['playlistID'];
+//    if(isset($_SESSION['pl'])){
+    dosql("update playlistItems set seq=-10 where seq=$seq and playlistid=$playlistID");
+    dosql("update playlistItems set seq=$seq where playlistid=$playlistID and seq=".($seq-1));
+    dosql("update playlistItems set seq=".($seq-1)." where playlistid=$playlistID and seq=-10");
+     
+    return true;
+}
+
+function rf_downPlaylistItem($seq){
+    session_start();
+   $playlistID=$_SESSION['pl']['playlistID'];
+    dosql("update playlistItems set seq=-10 where playlistid=$playlistID and seq=".$seq);
+    dosql("update playlistItems set seq=$seq where playlistid=$playlistID and seq=".($seq+1));
+    dosql("update playlistItems set seq=".($seq+1)." where playlistid=$playlistID and seq=-10");
+     
+    return true;
 }
 
 function loadPlaylistDef($playlistID){//loads the current list into a local array.  If none exists, creates one and stores it in the session.

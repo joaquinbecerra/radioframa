@@ -209,6 +209,16 @@ switch ($doWhat){
        // header('Content-Type: application/json');  
         echo rf_getPlaylistAdmin();
         break;
+    case "rf_upPlaylistItem":
+        require_once("lib/playlist_functions.php");
+       // header('Content-Type: application/json');  
+        echo rf_upPlaylistItem($id);
+        break;
+    case "rf_downPlaylistItem":
+        require_once("lib/playlist_functions.php");
+       // header('Content-Type: application/json');  
+        echo rf_downPlaylistItem($id);
+        break;
     case "getDivContent":
         echo $_REQUEST['content'];
         break;
