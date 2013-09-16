@@ -136,7 +136,7 @@ if (!isset($_SESSION['pl'])){
         </script>
     </head>
     <body>
-        <div style="width:90%;padding: 10px; text-align: right; font-size: 10px;"><a id="logOut" href="#"> Cerrar Sesión</div>
+        <div style="width:90%;padding: 10px; text-align: right; font-size: 10px;"><a id="logOut" href="#"> Cerrar Sesión</a></div>
         <h1>Radio Frama</h1>
         
         <div id="escuchando" style="border: 1px solid blueviolet; margin-bottom: 20px; padding: 5px;border-radius: 15px;"></div>

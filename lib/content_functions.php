@@ -752,10 +752,10 @@ function rf_getPlaylistDetail() {
     bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID) as objects");
 
     bldsql_col("p.userID");
-    bldsql_col("u.userName");
-    bldsql_from("users u");
-    bldsql_where("u.userID=p.userID");
-
+   // bldsql_col("u.userName");
+   // bldsql_from("users u");
+    //bldsql_where("u.userID=p.userID");
+    bldsql_col("(select select fname from users where  from playlistItems i,users u where playlistID=p.playlistID and u.userId=i.user ) as userName");
     bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID and itemType='album') as numAlbums");
     bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID and itemType='artist') as numArtists");
     bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID and itemType='genre') as numGenres");

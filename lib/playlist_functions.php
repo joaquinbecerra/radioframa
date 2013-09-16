@@ -295,8 +295,11 @@ function addItemToPlaylist($type,$id,$returnJS=false){
             $item=array('playlistItemID'=>'','itemType'=>$type,'itemID'=>$id,'itemName'=>$name);
 	    $items[]=$item;
             $pl['plItems']=$items;
+            $uid=0;
+            if(UL_UID)
+                $uid=UL_UID;
             if($pl['playlistID']!="temp" && $pl['playlistID']!=""){//insert into db
-                $ret=dosql("insert into playlistItems (playlistID,itemType,itemID,seq) select ".$pl['playlistID'].",'$type',$id,ifnull((select max(seq)+1 from playlistItems where playlistID=".$pl['playlistID']."),0)");
+                $ret=dosql("insert into playlistItems (playlistID,itemType,itemID,seq,user) select ".$pl['playlistID'].",'$type',$id,ifnull((select max(seq)+1 from playlistItems where playlistID=".$pl['playlistID']."),0),".UL_UID."");
             }else $ret=true;//temp list, no db insert needed yet.
         }
         $_SESSION['pl']=$pl;
