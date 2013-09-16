@@ -1,3 +1,22 @@
+<?php 
+
+
+session_start();
+
+require_once("lib/dbLogin.php");
+
+
+
+	require_once("lib/UL_userLogin.php");
+        UL_checkAuth(_conf("defaultDB"));
+   
+        if(!UL_ISADMIN){
+            die('Fuera de aqui raton!');
+            
+        }
+
+        
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -74,6 +93,14 @@
                 $.get('index.php?doWhat=rf_downPlaylistItem&id=' + index);
 
 
+            }
+            
+            function logOut(){
+                $.get('index.php?UL_logoff=1',function(){
+                    
+                    window.location.assign('player.php');
+                    
+                });
             }
 
             function updatePlaylist() {
@@ -152,6 +179,11 @@
                     myPlaylist.setPlaylist(pl);
 
 
+                });
+                $('#logOut').click(function(){
+                    alert('chaucito');
+                    logOut();
+                    return false;
                 })
 
                 var updateplay = setInterval(updatePlaylist, 5000);
@@ -219,7 +251,7 @@
                     To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
                 </div>
             </div>
-        </div>
+        </div><div><a id="logOut" href="#"> Cerrar Sesión</div></div>
 
 
 

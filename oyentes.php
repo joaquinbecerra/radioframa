@@ -91,7 +91,13 @@ if (!isset($_SESSION['pl'])){
                 })
             }
             
-            
+            function logOut(){
+                $.get('index.php?UL_logoff=1',function(){
+                    
+                    window.location.assign('oyentes.php');
+                    
+                });
+            }
             
             $(document).ready(function(){
                 
@@ -111,7 +117,14 @@ if (!isset($_SESSION['pl'])){
                    $('#playlist').toggle(300); 
                    return false;
                     
+                });
+                
+                 $('#logOut').click(function(){
+                    alert('chaucito');
+                    logOut();
+                    return false;
                 })
+                
                 /*$('.addToPlaylist').on('click',function(){
                     alert('ya');
                     addToPlaylist(this);
@@ -123,8 +136,9 @@ if (!isset($_SESSION['pl'])){
         </script>
     </head>
     <body>
+        <div style="width:90%;padding: 10px; text-align: right; font-size: 10px;"><a id="logOut" href="#"> Cerrar Sesión</div>
         <h1>Radio Frama</h1>
-    
+        
         <div id="escuchando" style="border: 1px solid blueviolet; margin-bottom: 20px; padding: 5px;border-radius: 15px;"></div>
         <div  style="border: 1px solid blueviolet; margin-bottom: 20px; padding: 5px;border-radius: 15px; "><a href="#" id="playlistshow">Playlist</a>
         <div id="playlist"></div>
