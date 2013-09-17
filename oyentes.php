@@ -25,9 +25,21 @@ if (!isset($_SESSION['pl'])){
             
             function loadPlaylist(){
                 
-                $.get('index.php?doWhat=rf_getPlaylistDetail&id=31&maxDivHeight=352',function (data){
-                    
-                    $('#playlist').html(data);
+                $.getJSON('index.php?doWhat=rf_getPlaylistDetail',function (data){
+                    var html='';
+                    console.log(data);
+                    for(var i=0; i<data.length;i++){
+                        html+= "<div>";
+                        html+= "<b>"+data[i].songName+"</b>";
+                        html+= " ( de "+data[i].artistName+" ";
+                        if (data[i].albumName)
+                            html+= " / "+data[i].albumName+" ) ";
+                        if (data[i].user!=null)
+                            html+= " Sugerido por: "+data[i].user+"</div> ";         
+                        
+                    }
+        
+                    $('#playlist').html(html);
                     
                 })
                 

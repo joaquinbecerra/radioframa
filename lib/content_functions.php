@@ -742,75 +742,107 @@ function getPlaylistDetail($playlistID) {
 
 function rf_getPlaylistDetail() {
 
-    bldsql_init();
-    bldsql_from("playlists p");
-    bldsql_where("p.name='radioframa'");
-    bldsql_where("(p.public=1 or p.userID=" . UL_UID . ")");
-    bldsql_col("p.name as name");
-    bldsql_col("p.playlistID");
-    bldsql_col("p.public as public");
-    bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID) as objects");
-
-    bldsql_col("p.userID");
-   // bldsql_col("u.userName");
-   // bldsql_from("users u");
-    //bldsql_where("u.userID=p.userID");
-    bldsql_col("(select select fname from users where  from playlistItems i,users u where playlistID=p.playlistID and u.userId=i.user ) as userName");
-    bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID and itemType='album') as numAlbums");
-    bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID and itemType='artist') as numArtists");
-    bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID and itemType='genre') as numGenres");
-
-    bldsql_col("(select count(*) from playlistItems pi, albums_songs albs where pi.playlistID=p.playlistID and pi.itemType='album' and albs.albumID=pi.itemID) as numAlbumSongs");
-    bldsql_col("(select count(*) from playlistItems pi, artists_songs arts where pi.playlistID=p.playlistID and pi.itemType='artist' and arts.artistID=pi.itemID) as numArtistSongs");
-    bldsql_col("(select count(*) from playlistItems pi, genres_songs gens where pi.playlistID=p.playlistID and pi.itemType='genre' and gens.genreID=pi.itemID) as numGenreSongs");
-
-    bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID and itemType='song') as numSongs");
-
-    bldsql_col("(select sum(s.songLength) from playlistItems pi, albums_songs albs, songs s where albs.songID=s.songID and pi.playlistID=p.playlistID and pi.itemType='album' and albs.albumID=pi.itemID) as timeAlbumSongs");
-    bldsql_col("(select sum(s.songLength) from playlistItems pi, artists_songs arts,songs s where arts.songID=s.songID and pi.playlistID=p.playlistID and pi.itemType='artist' and arts.artistID=pi.itemID) as timeArtistSongs");
-    bldsql_col("(select sum(s.songLength) from playlistItems pi, genres_songs gens,songs s  where gens.songID=s.songID and pi.playlistID=p.playlistID and pi.itemType='genre' and gens.genreID=pi.itemID) as timeGenreSongs");
-
-    bldsql_col("(select sum(s.songLength) from playlistItems pi, songs s where pi.playlistID=p.playlistID and pi.itemType='song' and pi.itemID=s.songID) as timeSongs");
-
-//songLength
-    $a = dosql(bldsql_cmd(), 1);
+    $sql="select s.songId as songId ,s.songName as songName,a.name as albumName,t.name as artistName ,u.fname as user
+from playlistItems i left join users u on(i.user=u.userId),
+ playlists p, songs s
+left join albums_songs l on(l.songId=s.songId)
+left join albums a on (l.albumId=a.albumId)
+left join artists_songs r on(r.songId=s.songId)
+left join artists t on (t.artistId=t.artistId)
+where
+p.playlistId=i.playlistId
+and p.name='radioframa'
+and s.songId=i.itemID
+order by seq";
+    
+    $a = dosql($sql);
+    //var_dump($a);
+    $res=array();
     if ($a) {
-        extract($a);
-
-        $html = "<table border='0' width='100%'><tr><td valign='top'><h3>Playlist";
-        if ($userID != UL_UID)
-            $html.="<span class='tiny'> ($userName)&nbsp;&nbsp;</span>";
-        $html.="</h3>";
-        // $html.=getPlayNowLink("playlist",$playlistID)." ";
-        //$html.=getPlayNowLink("playlistInOrder",$playlistID)."<BR>";
-        //download
-        /* if(_conf("allowDownloads")){
-          $html.="<br>".getDownloadLink($playlistID)."<br><br>";
-          }
-          if($public)$html.=_conf("lang_publicList");
-          else $html.=_conf("lang_privateList");
-
-          $html.="<br>$objects "._conf("lang_itemsInPlaylist")."<br>";
-          $html.="<ul>";
-          $html.="<li>$numAlbums "._conf("lang_albums")."</li>";
-          $html.="<li>$numArtists "._conf("lang_artists")."</li>";
-          $html.="<li>$numGenres "._conf("lang_genres")."</li>";
-          $html.="<li>$numSongs "._conf("lang_songs")."</li>";
-          $html.="</ul>";
-          $html.=($numAlbumSongs+$numArtistSongs+$numGenreSongs+$numSongs)." "._conf("lang_totalSongs");
-
-          $seconds=($timeAlbumSongs+$timeArtistSongs+$timeGenreSongs+$timeSongs);
-          $hours=floor($seconds/3600);
-          $min=floor(($seconds%3600)/60);
-          $sec=($seconds%60);
-          if($seconds)$html.="<br>"._conf("lang_totalSongTime").": $hours "._conf("lang_hours")." $min "._conf("lang_minutes")." $sec "._conf("lang_seconds");
-         */
-        //if($userID==UL_UID)$html.="<br><a href=\"javascript:loadPlaylist('$playlistID');\">"._conf("lang_editPlaylist")."</a>";
-        //$html.="</td><td valign='top'><h4>"._conf("lang_playlistDetail")."</h4>";
-        $html.=sendPlaylistItems($playlistID);
-        $html.="</td></tr></table>";
+        for($i=0; $i<count($a['songIds']);$i++){
+            
+            $res[]=Array('songId'=>$a['songIds'][$i],
+                    'songName'=> utf8_encode($a['songNames'][$i]),
+                    'albumName'=>utf8_encode($a['albumNames'][$i]),
+                    'artistName'=>utf8_encode($a['artistNames'][$i]),
+                    'user'=>utf8_encode($a['users'][$i])
+                
+                    );            
+        }
+        //var_dump($res);
     }
-    return $html;
+    return json_encode($res);
+    
+    
+//    bldsql_init();
+//    bldsql_from("playlists p");
+//    bldsql_where("p.name='radioframa'");
+//    bldsql_where("(p.public=1 or p.userID=" . UL_UID . ")");
+//    bldsql_col("p.name as name");
+//    bldsql_col("p.playlistID");
+//    bldsql_col("p.public as public");
+//    bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID) as objects");
+//
+//    bldsql_col("p.userID");
+//   // bldsql_col("u.userName");
+//   // bldsql_from("users u");
+//    //bldsql_where("u.userID=p.userID");
+//    bldsql_col("(select select fname from users where  from playlistItems i,users u where playlistID=p.playlistID and u.userId=i.user ) as userName");
+//    bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID and itemType='album') as numAlbums");
+//    bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID and itemType='artist') as numArtists");
+//    bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID and itemType='genre') as numGenres");
+//
+//    bldsql_col("(select count(*) from playlistItems pi, albums_songs albs where pi.playlistID=p.playlistID and pi.itemType='album' and albs.albumID=pi.itemID) as numAlbumSongs");
+//    bldsql_col("(select count(*) from playlistItems pi, artists_songs arts where pi.playlistID=p.playlistID and pi.itemType='artist' and arts.artistID=pi.itemID) as numArtistSongs");
+//    bldsql_col("(select count(*) from playlistItems pi, genres_songs gens where pi.playlistID=p.playlistID and pi.itemType='genre' and gens.genreID=pi.itemID) as numGenreSongs");
+//
+//    bldsql_col("(select count(*) from playlistItems where playlistID=p.playlistID and itemType='song') as numSongs");
+//
+//    bldsql_col("(select sum(s.songLength) from playlistItems pi, albums_songs albs, songs s where albs.songID=s.songID and pi.playlistID=p.playlistID and pi.itemType='album' and albs.albumID=pi.itemID) as timeAlbumSongs");
+//    bldsql_col("(select sum(s.songLength) from playlistItems pi, artists_songs arts,songs s where arts.songID=s.songID and pi.playlistID=p.playlistID and pi.itemType='artist' and arts.artistID=pi.itemID) as timeArtistSongs");
+//    bldsql_col("(select sum(s.songLength) from playlistItems pi, genres_songs gens,songs s  where gens.songID=s.songID and pi.playlistID=p.playlistID and pi.itemType='genre' and gens.genreID=pi.itemID) as timeGenreSongs");
+//
+//    bldsql_col("(select sum(s.songLength) from playlistItems pi, songs s where pi.playlistID=p.playlistID and pi.itemType='song' and pi.itemID=s.songID) as timeSongs");
+//
+////songLength
+//    $a = dosql(bldsql_cmd(), 1);
+//    if ($a) {
+//        extract($a);
+//
+//        $html = "<table border='0' width='100%'><tr><td valign='top'><h3>Playlist";
+//        if ($userID != UL_UID)
+//            $html.="<span class='tiny'> ($userName)&nbsp;&nbsp;</span>";
+//        $html.="</h3>";
+//        // $html.=getPlayNowLink("playlist",$playlistID)." ";
+//        //$html.=getPlayNowLink("playlistInOrder",$playlistID)."<BR>";
+//        //download
+//        /* if(_conf("allowDownloads")){
+//          $html.="<br>".getDownloadLink($playlistID)."<br><br>";
+//          }
+//          if($public)$html.=_conf("lang_publicList");
+//          else $html.=_conf("lang_privateList");
+//
+//          $html.="<br>$objects "._conf("lang_itemsInPlaylist")."<br>";
+//          $html.="<ul>";
+//          $html.="<li>$numAlbums "._conf("lang_albums")."</li>";
+//          $html.="<li>$numArtists "._conf("lang_artists")."</li>";
+//          $html.="<li>$numGenres "._conf("lang_genres")."</li>";
+//          $html.="<li>$numSongs "._conf("lang_songs")."</li>";
+//          $html.="</ul>";
+//          $html.=($numAlbumSongs+$numArtistSongs+$numGenreSongs+$numSongs)." "._conf("lang_totalSongs");
+//
+//          $seconds=($timeAlbumSongs+$timeArtistSongs+$timeGenreSongs+$timeSongs);
+//          $hours=floor($seconds/3600);
+//          $min=floor(($seconds%3600)/60);
+//          $sec=($seconds%60);
+//          if($seconds)$html.="<br>"._conf("lang_totalSongTime").": $hours "._conf("lang_hours")." $min "._conf("lang_minutes")." $sec "._conf("lang_seconds");
+//         */
+//        //if($userID==UL_UID)$html.="<br><a href=\"javascript:loadPlaylist('$playlistID');\">"._conf("lang_editPlaylist")."</a>";
+//        //$html.="</td><td valign='top'><h4>"._conf("lang_playlistDetail")."</h4>";
+//        $html.=sendPlaylistItems($playlistID);
+//        $html.="</td></tr></table>";
+//    }
+//    return $html;
 }
 
 function sendItemList($ids, $names, $destDivID, $jsMethod, $ids2 = false, $names2 = false, $ids3 = false, $names3 = false) {//helper to do the js voodoo to send out a list of items (songs, albums...)
