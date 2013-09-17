@@ -74,7 +74,7 @@
             self._init();
             var onPlayNowChange = self.option('onPlayNowChange');
             if (onPlayNowChange && $.isFunction(onPlayNowChange)) {
-                onPlayNowChange();
+                onPlayNowChange('init');
             }
         });
 
@@ -84,7 +84,7 @@
             var onPlayNowChange = self.option('onPlayNowChange');
             if (onPlayNowChange && $.isFunction(onPlayNowChange)) {
 
-                onPlayNowChange();
+                onPlayNowChange('ended');
             }
         });
 
@@ -94,7 +94,7 @@
             var onPlayNowChange = self.option('onPlayNowChange');
             if (onPlayNowChange && $.isFunction(onPlayNowChange)) {
 
-                onPlayNowChange();
+                onPlayNowChange('play');
             }
         });
 

@@ -475,6 +475,14 @@ switch ($doWhat){
         require_once("lib/playlist_functions.php");
         echo deletePlaylistItem($id);
         break;
+    case "rf_deletePlaylistItem":
+        require_once("lib/playlist_functions.php");
+        echo rf_deletePlaylistItem($id);
+        break;
+    case "rf_clearPlaylist":
+        require_once("lib/playlist_functions.php");
+        echo rf_clearPlaylist();
+        break;
     case "deletePlaylist":
         require_once("lib/playlist_functions.php");
         echo deletePlaylist($id);

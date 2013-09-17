@@ -58,12 +58,18 @@ require_once("lib/dbLogin.php");
 
             var myPlaylist;
 
-            function PlayNowChange() {
+            function PlayNowChange(tipo) {
 
                 var index = myPlaylist.current;
                 var id = myPlaylist.playlist[index].songId;
                 $.get('index.php?doWhat=rf_updatenowPlaying&id=' + id);
-
+                
+                console.log(tipo);
+                //si cambio porque termino el tema anterior
+                if( tipo=='ended'){
+                    myPlaylist.remove(index-1);
+                    RemoveItem(index-1);
+                }
 
             }
 
@@ -72,7 +78,26 @@ require_once("lib/dbLogin.php");
                 console.log(index);
 
                 var id = myPlaylist.playlist[index].itemId;
-                $.get('index.php?doWhat=deletePlaylistItem&id=' + index);
+                $.get('index.php?doWhat=rf_deletePlaylistItem&id=' + index);
+
+                
+            }
+            
+            function Clear() {
+                
+                if(confirm('Estas seguro??')){
+                    
+                    
+                    $.get('index.php?doWhat=rf_clearPlaylist',function(){
+                        
+                     myPlaylist.setPlaylist([]);
+                     
+                    });
+                    
+                }
+
+               
+               
 
 
             }
@@ -184,6 +209,12 @@ require_once("lib/dbLogin.php");
                     alert('chaucito');
                     logOut();
                     return false;
+                });
+                
+                $('#clear').click(function(){
+                    
+                    Clear();
+                    return false;
                 })
 
                 var updateplay = setInterval(updatePlaylist, 5000);
@@ -194,7 +225,13 @@ require_once("lib/dbLogin.php");
         </script>
 
     </head>
-    <body class="demo" onload="">
+    <body  onload="">
+    <div style="font-size:10px; width:480px;text-align: center;" >
+        <a id="logOut" href="#" > Cerrar Sesión</a>
+
+    </div>
+    
+
         <div id="jp_container_N" class="jp-video jp-video-270p">
             <div class="jp-type-playlist">
                 <div id="jquery_jplayer_N" class="jp-jplayer"></div>
@@ -251,9 +288,13 @@ require_once("lib/dbLogin.php");
                     To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
                 </div>
             </div>
-        </div><div><a id="logOut" href="#"> Cerrar Sesión</div></div>
+        </div></div>
 
+ <div style="font-size:10px; width:480px;text-align: center;" >
 
+        <a id="clear" href="#" > Borrar Todos</a> &nbsp;&nbsp;&nbsp;
+        
+    </div>
 
     </body>
 

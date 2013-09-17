@@ -67,6 +67,19 @@ function saveTempList($pl){
     }
     return false;
 }
+
+function rf_clearPlaylist(){
+    session_start();
+    //var_dump($_SESSION['pl']);
+    dosql("delete from playlistItems where playlistID=(select playlistId from playlists where name='radioframa');");
+    
+}
+
+function rf_deletePlaylistItem($id){
+    $ok=dosql("delete from playlistItems where seq=".$id." and playlistID=(select playlistId from playlists where name='radioframa'); ");
+    $ok=dosql("update playlistItems set seq=seq-1  where seq > ".$id." and playlistID=(select playlistId from playlists where name='radioframa');");
+}
+
 //Playlist delete isnt working right.  Something where deletes aren't always deleted from db list.  Needs more testing.
 //function deletePlaylistItem($seqNum){
 function deletePlaylistItem($id){
