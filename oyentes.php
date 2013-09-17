@@ -34,7 +34,7 @@ if (!isset($_SESSION['pl'])){
                         html+= " ( de "+data[i].artistName+" ";
                         if (data[i].albumName)
                             html+= " / "+data[i].albumName+" ) ";
-                        if (data[i].user!=null)
+                        if (data[i].user)
                             html+= " Sugerido por: "+data[i].user+"</div> ";         
                         
                     }

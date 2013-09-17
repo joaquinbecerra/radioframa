@@ -748,7 +748,7 @@ from playlistItems i left join users u on(i.user=u.userId),
 left join albums_songs l on(l.songId=s.songId)
 left join albums a on (l.albumId=a.albumId)
 left join artists_songs r on(r.songId=s.songId)
-left join artists t on (t.artistId=t.artistId)
+left join artists t on (t.artistId=r.artistId)
 where
 p.playlistId=i.playlistId
 and p.name='radioframa'
