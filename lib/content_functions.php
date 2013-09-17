@@ -389,7 +389,7 @@ function rf_getNowPlaying($lastID) {
     bldsql_where("u.userID=np.userID");
     bldsql_where("s.songID=np.songID");
     bldsql_orderby("np.id desc");
-    bldsql_col("u.userName");
+    bldsql_col("u.fname as userName");
     bldsql_col("s.songName");
     bldsql_col("(select alb.name from albums alb, albums_songs albs where alb.albumID=albs.albumID and albs.songID=s.songID) as albumName");
     bldsql_col("(select art.name from artists art, artists_songs arts where art.artistID=arts.artistID and arts.songID=s.songID) as artistName");
@@ -415,6 +415,7 @@ function rf_getNowPlaying($lastID) {
 
     //$limit = (_conf("numNowPlayingItems") > 0) ? _conf("numNowPlayingItems") : 10; //conf doesn't support number limits yet, so make reasonable
     $limit = 1;
+
     $a = dosql(bldsql_cmd() . " limit " . $limit);
     if ($a) {
         extract($a);
@@ -438,9 +439,12 @@ function rf_getNowPlaying($lastID) {
 
 function rf_updateNowPlaying($songId) {
     
-    $uid=UL_UID+0;
+   // $uid=UL_UID+0;
     dosql("insert into nowPlaying 
-             select 0,now(),1,$uid,songLength, songid from songs where songid=$songId"); //Prune out old entries.
+        select 0,now(),1,p.user,songLength, songid from songs s, playlistItems p
+        where songId=$songId and p.itemId=$songId limit 1;
+        "); //Prune out old entries.
+ 
     return;
 }
 
