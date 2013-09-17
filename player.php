@@ -64,9 +64,11 @@ require_once("lib/dbLogin.php");
                 var id = myPlaylist.playlist[index].songId;
                 $.get('index.php?doWhat=rf_updatenowPlaying&id=' + id);
                 
-                console.log(tipo);
+               
                 //si cambio porque termino el tema anterior
                 if( tipo=='ended'){
+                    if (index-1<0)
+                        index=1;
                     myPlaylist.remove(index-1);
                     RemoveItem(index-1);
                 }
@@ -75,7 +77,7 @@ require_once("lib/dbLogin.php");
 
             function RemoveItem(index) {
 
-                console.log(index);
+              // console.log(index);
 
                 var id = myPlaylist.playlist[index].itemId;
                 $.get('index.php?doWhat=rf_deletePlaylistItem&id=' + index);
@@ -104,7 +106,7 @@ require_once("lib/dbLogin.php");
             
             function upItem(index) {
 
-                console.log(index);
+              //  console.log(index);
 
                 $.get('index.php?doWhat=rf_upPlaylistItem&id=' + index);
 
@@ -113,7 +115,7 @@ require_once("lib/dbLogin.php");
             
             function downItem(index) {
 
-                console.log(index);
+               // console.log(index);
 
                 $.get('index.php?doWhat=rf_downPlaylistItem&id=' + index);
 
