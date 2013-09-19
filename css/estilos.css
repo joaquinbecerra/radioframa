@@ -1,0 +1,123 @@
+body{
+    background: #000;
+}
+*{
+    font-family: Tahoma;
+    font-size: 11px;
+    color:#fff;
+}
+.container{
+    background:url("../images/bg_body.jpg") no-repeat center;
+    width:950px;
+    height:768px;
+    margin:20px auto;
+}
+
+.nowplaying{
+    background: url("../images/bg_nowplaying.png") no-repeat center;
+    width:346px;
+    height: 49px;
+    color:white;
+    float: right;
+    margin-top: 65px;
+    margin-right: 80px;
+}
+
+
+.playlist{
+    width: 265px;
+    height: 205px;
+    background: url("../images/bg_playlist.png") no-repeat;
+    margin-right: 82px;
+    float: right;
+    padding: 25px 40px;
+    position:relative;
+}
+
+.playlist .contenedor_playlist{
+    overflow: auto;
+    word-wrap: break-word;
+    height: 200px;
+    padding: 0 26px 0 10px;
+    width: 270px;
+}
+
+.contenedor_playlist div{
+    border-bottom: 1px dotted #666;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    color:#888;
+}
+
+.playlist:after{
+    content: "";
+    width: 335px;
+    height: 245px;
+    background: url("../images/glass.png") no-repeat;
+    top: 0;
+    position: absolute;
+    left: 0;
+    
+}
+
+
+.buscador{
+    float: left;
+margin: 70px 0 0 105px;
+}
+.buscador form{
+    
+}
+.buscador input.texto_busca{
+    background:url("../images/input_bg.png") no-repeat;
+    width:219px;
+    height: 31px;
+    border:none;
+    padding: 0 15px;
+    outline: none;
+}
+
+.buscador input.button{
+    border:none;
+    text-indent: -2000000em;
+    background:url("../images/btn_buscar.png") no-repeat;
+    width:85px;
+    height: 35px;
+}
+
+.buscador .resultados{
+    width: 311px;
+    height: 181px;
+    background: url("../images/bg_searchlist.png") no-repeat;
+    padding: 20px;
+}
+
+.contenedor_resultados{
+    overflow: auto;
+    height: 180px;
+}
+
+.chat_mjes{
+    width: 311px;
+    height: 181px;
+    background: url("../images/bg_searchlist.png") no-repeat;
+    
+    margin-left: 105px;
+    clear: both;
+    padding: 20px;
+}
+
+.contenedor_chat{
+    overflow: auto;
+    height: 170px;
+    word-wrap: break-word;
+}
+input.texto_chat{
+    background:url("../images/input_bg.png") no-repeat;
+    width:216px;
+    height: 31px;
+    border:none;
+    margin-left: 105px;
+    padding: 0 15px;
+    outline: none;
+}
