@@ -90,6 +90,7 @@ $passedUID="";
 $authKey="";
 $first="";
 $playlistID="";
+$msg='';
 
 if(isset($_REQUEST['doWhat'])) $doWhat=scrubTextIn($_REQUEST['doWhat'],1);//Strict 'word' only filter
 if(isset($_REQUEST['type'])) $type=scrubTextIn($_REQUEST['type'],1);
@@ -101,6 +102,9 @@ if(isset($_REQUEST['uid'])) $passedUID=scrubTextIn($_REQUEST['uid'],2);//need to
 if(isset($_REQUEST['authKey'])) $authKey=scrubTextIn($_REQUEST['authKey'],1);
 if(isset($_REQUEST['first'])) $first=scrubTextIn($_REQUEST['first'],1);
 if(isset($_REQUEST['playlistID'])) $playlistID=scrubTextIn($_REQUEST['playlistID'],1);
+if(isset($_REQUEST['chattime'])) $chattime=scrubTextIn($_REQUEST['chattime'],1);
+if(isset($_REQUEST['msg'])) $msg=mysql_real_escape_string ($_REQUEST['msg']);
+
 ### fin Alain
 $playListType="";
 
@@ -218,6 +222,14 @@ switch ($doWhat){
         require_once("lib/playlist_functions.php");
        // header('Content-Type: application/json');  
         echo rf_downPlaylistItem($id);
+        break;
+    case "rf_sendMessages":
+        
+        echo rf_sendMessages($msg);
+        break;
+    case "rf_getMessages":
+        
+        echo rf_getMessages($id);
         break;
     case "getDivContent":
         echo $_REQUEST['content'];

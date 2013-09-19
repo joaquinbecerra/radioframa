@@ -80,7 +80,7 @@ require_once("lib/dbLogin.php");
               // console.log(index);
 
                 var id = myPlaylist.playlist[index].itemId;
-                $.get('index.php?doWhat=rf_deletePlaylistItem&id=' + index);
+                $.get('index.php?doWhat=rf_deletePlaylistItem&id=' + id);
 
                 
             }
@@ -133,8 +133,29 @@ require_once("lib/dbLogin.php");
             function updatePlaylist() {
 
                 $.getJSON('index.php?doWhat=rf_getPlaylistAdmin', function(data) {
-                    var pl = myPlaylist.playlist;
+                    //var pl = myPlaylist.playlist;
+                    
+                    
+                    var pl = [];
                     for (var i = 0; i < data.length; i++) {
+                        //console.log(data['filename']);
+                        pl.push({title: data[i].title,
+                            artist: data[i].album,
+                            mp3: data[i].filename,
+                            songId: data[i].songId,
+                            itemId: data[i].itemId,
+                        });
+
+
+
+
+                    }
+                    //console.log(pl);
+                    myPlaylist.playlist=pl;
+                    myPlaylist._refresh(true);
+                    myPlaylist._highlight(myPlaylist.current);
+                    
+                    /*for (var i = 0; i < data.length; i++) {
                         var esta = false;
                         for (var j = 0; j < pl.length; j++) {
 
@@ -154,9 +175,10 @@ require_once("lib/dbLogin.php");
                                 itemId: data[i].itemId,
                             });
                         }
+                        
 
                     }
-
+*/
 
                 })
 

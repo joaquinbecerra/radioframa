@@ -109,6 +109,48 @@ function doSearch($searchVal, $searchType) {
         return $title . getBrowsePage($searchType, $searchVal, "", 25, false, true);
     }
 }
+function rf_sendMessages($msg) {
+    
+    $uid=UL_UID;
+    $sql="insert into mensajes values(0,now(),$uid,'$msg');";
+    dosql($sql);
+    
+    $res=Array('id'=>mysql_insert_id());
+    
+    return json_encode($res);
+    //rf_sendMessages($msg);
+}
+
+function rf_getMessages($id) {
+    
+    $w='';
+    if ($id){
+        $w = ' and id> '.$id;
+    }
+    $uid=UL_UID;
+    $sql="select m.id as id, date_format(time,'%H:%i:%S') as time, u.fname as userName,msg from mensajes m,users u
+            where m.user=u.userID and time> current_date() $w order by 1;";
+    $a=dosql($sql);
+   
+    $res=array();
+    if ($a){
+        extract($a);
+        for ($i=0;$i<count($ids);$i++){
+        $res[]=Array(
+            'id'=>$ids[$i],
+            'time'=>$times[$i],
+            'userName'=>$userNames[$i],
+            'msg'=>$msgs[$i]
+            
+                
+        );    
+        }
+        
+    }
+    
+    return json_encode($res);
+    //rf_sendMessages($msg);
+}
 
 function rf_doSearch($searchVal) {
 

@@ -76,8 +76,12 @@ function rf_clearPlaylist(){
 }
 
 function rf_deletePlaylistItem($id){
-    $ok=dosql("delete from playlistItems where seq=".$id." and playlistID=(select playlistId from playlists where name='radioframa'); ");
-    $ok=dosql("update playlistItems set seq=seq-1  where seq > ".$id." and playlistID=(select playlistId from playlists where name='radioframa');");
+    $ok=dosql("delete from playlistItems where playlistItemID=".$id." ;");
+    //reordena
+     $ok=dosql("SET @r=-1;");
+    $ok=dosql("UPDATE playlistItems SET seq= @r:= (@r+1) where playlistID=(select playlistId from playlists where name='radioframa') ORDER BY seq asc;");
+    
+    //$ok=dosql("update playlistItems set seq=seq-1  where seq > ".$id." and playlistID=(select playlistId from playlists where name='radioframa');");
 }
 
 //Playlist delete isnt working right.  Something where deletes aren't always deleted from db list.  Needs more testing.
