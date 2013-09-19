@@ -17,6 +17,7 @@ UL_checkAuth(_conf("defaultDB"));
     <head>
         <title>Radio Frama</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link type="text/css" rel="stylesheet" href="css/estilos.css" media="all" />
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript">
 
@@ -54,11 +55,11 @@ UL_checkAuth(_conf("defaultDB"));
                     }
                     else {
 
-                        var html = ' Estas escuchando: <br>';
+                        var html = ' ';
                         if (data.albumID) {
-                            html += "<img src='images.php?doWhat=getImage&type=albumArt&id=" + data.albumID + "' style='float:left;'>";
+//                            html += "<img src='images.php?doWhat=getImage&type=albumArt&id=" + data.albumID + "' style='float:left;'>";
                         }
-                        html += '<b>' + data.songName + '</b><br>';
+                        html += '<b>' + data.songName + ' - </b>';
                         html += ' Artista: ' + data.artistName + '';
                         html += ' Album: ' + data.albumName + '';
                         html += ' Sugerido por: ' + data.userName + "<div style='clear:both;'></div>";
@@ -155,12 +156,12 @@ UL_checkAuth(_conf("defaultDB"));
                     return false;
                 })
 
-                $('#playlist').hide();
-                $('#playlistshow').click(function() {
-                    $('#playlist').toggle(300);
-                    return false;
-
-                });
+//                $('#playlist').hide();
+//                $('#playlistshow').click(function() {
+//                    $('#playlist').toggle(300);
+//                    return false;
+//
+//                });
 
                 $('#logOut').click(function() {
                     alert('chaucito');
@@ -192,32 +193,40 @@ UL_checkAuth(_conf("defaultDB"));
         </script>
     </head>
     <body>
+        <div class="container">
         <div style="width:90%;padding: 10px; text-align: right; font-size: 10px;"><a id="logOut" href="#"> Cerrar Sesión</a></div>
-        <h1>Radio Frama</h1>
 
-        <div id="escuchando" style="border: 1px solid blueviolet; margin-bottom: 20px; padding: 5px;border-radius: 15px;"></div>
-        <div  style="border: 1px solid blueviolet; margin-bottom: 20px; padding: 5px;border-radius: 15px; "><a href="#" id="playlistshow">Playlist</a>
-            <div id="playlist"></div>
-        </div>
-
-        <div  style="border: 1px solid blueviolet; margin-bottom: 20px; padding: 5px;border-radius: 15px;">
+        <div class="buscador">
             <form id="search" >
-                Buscar: <input type="text" id="searchtext"/>
-            </form><br>
-            <div id="results" style="border:1px solid blueviolet;width:80%; max-height: 200px; overflow: auto; margin: auto auto;border-radius: 15px;padding:5px;"></div>
-        </div>
-
-        <div  style="border: 1px solid blueviolet; margin-bottom: 20px; padding: 5px;border-radius: 15px;">
-            <div style="width: 100% ;text-align: center;">El muro del Tío Frama</div>
-            <div id="chat" style="border:1px solid blueviolet;width:80%; height: 200px; overflow: auto; margin: auto auto;border-radius: 15px;padding:5px;background-color: #ccc;"></div>
-            <br>
-            <form id="chatinput" >
-                <div style="width: 100% ;text-align: center;">
-                <input type="text" id="chattext"  style="width: 80% ;border: 1px solid blueviolet; margin: auto auto;border-radius: 15px;padding:4px;"/>
-                </div>
+                <input type="text" id="searchtext" class="texto_busca"/>
+                <input type="submit" value="buscar" class="button"/>
             </form>
+            <div class="resultados" >
+                <div id="results" class="contenedor_resultados">
+                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="nowplaying" id="escuchando"></div>
+        
+        <div class="playlist">
+            <div id="playlist" class="contenedor_playlist">
+                
+            </div>
         </div>
 
+
+
+            <div class="chat_mjes" >
+                <div  id="chat" class="contenedor_chat" >
+                    
+                </div>
+            </div>
+            <form id="chatinput" >
+                <input type="text" id="chattext" class="texto_chat"/>
+            </form>
+       </div>
     </body>
 
 
