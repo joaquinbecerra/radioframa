@@ -416,6 +416,25 @@ function getNowPlaying($lastID) {
     return $html;
 }
 
+function rf_getNowPlayingF(){
+
+    $sql='select 
+    s.songID,
+    s.file,
+    now()-n.startTime,
+    s.*,
+    n.*
+from
+    nowPlaying n,
+    songs s
+where
+    n.songID = s.songID   
+order by n.id desc
+limit 1';
+    
+        
+}
+
 function rf_getNowPlaying($lastID) {
     //First do a little cleanup on the table if needed.
     $recentness = _conf("nowPlayingRecentness");
