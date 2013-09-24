@@ -16,21 +16,17 @@ if (!UL_ISADMIN) {
 <html>
     <head>
         <meta charset=utf-8 />
-
-        <!-- Website Design By: www.happyworm.com -->
         <title>Radio Player</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <link href="css/jPlayer.css" rel="stylesheet" type="text/css" />
-
-        <link href="js/prettify/prettify-jPlayer.css" rel="stylesheet" type="text/css" />
         <link href="player/skin/pink.flag/jplayer.pink.flag.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>-
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
-
         <script type="text/javascript">
             //<![CDATA[
 
             var myPlayer;
+            var songId=0;
 
             function load() {
 
@@ -38,12 +34,19 @@ if (!UL_ISADMIN) {
                     //console.log(data);
                     if (!data)
                         return;
+                    if (data.songId==songId){
+                       // $("#jquery_jplayer_1").jPlayer("pause", parseInt(data.time,10));
+                       // console.log(typeof parseInt(data.time,10));
+                        return;
+                    }
+                        
                     $("#jquery_jplayer_1").jPlayer("setMedia", {
-                        mp3: data[i].filename
+                        mp3: data.filename
                     });
 
-                    $("#jquery_jplayer_1").jPlayer("play", data[i].time);
-
+                    $("#jquery_jplayer_1").jPlayer("play", parseInt(data.time,10)+3);
+                    
+                    songId=data.songId;
                 })
 
             }
@@ -56,53 +59,44 @@ if (!UL_ISADMIN) {
                     smoothPlayBar: true,
                     keyEnabled: true,
                     audioFullScreen: true,
+                    ready: function(){
+                        load();
+                      
+                    }
                 });
+                //load();
+                var updateplay = setInterval(load, 3000);
                 
                 
 
             });
             //]]>
         </script>
+        <style>
+            .jp-controls{
+                height: 0;
+                width: 0;
+            }
+        </style>
 
     </head>
-    <body  onload="">
+    <body >
 
-        <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+        <div id="jquery_jplayer_1" class="jp-jplayer_">?</div>
 
         <div id="jp_container_1" class="jp-audio">
             <div class="jp-type-single">
-                <div class="jp-gui jp-interface">
-                    <ul class="jp-controls">
-
+                <div class="jp-gui_ jp-interface " style='height: 0px;'>
+                    <ul class="jp-controls"  style='height: 0px;padding:0'>
                         <li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
                         <li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
                         <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
                     </ul>
-                    <div class="jp-progress">
-                        <div class="jp-seek-bar">
-                            <div class="jp-play-bar"></div>
-
-                        </div>
-                    </div>
                     <div class="jp-volume-bar">
                         <div class="jp-volume-bar-value"></div>
-                    </div>
-                    <div class="jp-current-time"></div>
-                    <div class="jp-duration"></div>
-                    <ul class="jp-toggles">
-                        <li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
-                        <li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
-                    </ul>
+                    </div>                    
                 </div>
-                <div class="jp-title">
-                    <ul>
-                        <li>Cro Magnon Man</li>
-                    </ul>
-                </div>
-                <div class="jp-no-solution">
-                    <span>Update Required</span>
-                    To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-                </div>
+   
             </div>
         </div>
     </body>

@@ -29,7 +29,7 @@ require_once("lib/dbLogin.php");
 
         <link href="js/prettify/prettify-jPlayer.css" rel="stylesheet" type="text/css" />
         <link href="player/skin/pink.flag/jplayer.pink.flag.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>-
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
         <script type="text/javascript" src="js/jplayer.playlist.js"></script>
         <!--<script type="text/javascript" src="js/jquery.jplayer.inspector.js"></script>

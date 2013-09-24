@@ -19,7 +19,7 @@ body{
     height: 49px;
     color:white;
     float: right;
-    margin-top: 65px;
+    margin-top: 25px;
     margin-right: 80px;
 }
 
@@ -120,4 +120,15 @@ input.texto_chat{
     margin-left: 105px;
     padding: 0 15px;
     outline: none;
+}
+
+.play{
+    
+     width:242px;
+    height: 90px;
+    color:white;
+    float: right;
+    margin-top: -25px;
+    margin-right: 170px;
+    
 }
