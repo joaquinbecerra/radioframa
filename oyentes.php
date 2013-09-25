@@ -22,6 +22,7 @@ UL_checkAuth(_conf("defaultDB"));
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/jquery.mousewheel.js"></script> 
         <script type="text/javascript" src="js/jquery.jscrollpane.js"></script> 
+        <script type="text/javascript" src="js/jquery.newsticker.js"></script> 
         <script type="text/javascript">
 
             var chattime=0;
@@ -68,7 +69,7 @@ UL_checkAuth(_conf("defaultDB"));
                         html += '<b>' + data.songName + ' - </b>';
                         html += ' Artista: ' + data.artistName + '';
                         html += ' Album: ' + data.albumName + '';
-                        html += ' Sugerido por: ' + data.userName + "<div style='clear:both;'></div>";
+                        html += ' Sugerido por: ' + data.userName;
                         $('#escuchando').html(html).attr('data-songid', data.songID);
                     }
 
@@ -80,7 +81,9 @@ UL_checkAuth(_conf("defaultDB"));
             
                 $.getJSON('index.php?doWhat=rf_getMessages&id='+chattime, function(data) {
                     
-                    
+                    var container = $('.contenedor_chat').jScrollPane();
+                        var api = container.data('jsp');
+                        api.destroy();
                     var html='';
                    
                     for (var i=0;i<data.length;i++){
@@ -95,6 +98,7 @@ UL_checkAuth(_conf("defaultDB"));
                     //console.log(html);
                     //chattime=data[i].id;
                     $('#chat').append(html).scrollTop($('#chat')[0].scrollHeight);
+                    $('.contenedor_chat').jScrollPane();
                 });
             }
             
@@ -163,6 +167,7 @@ UL_checkAuth(_conf("defaultDB"));
                 loadPlaylist();
                 loadEscuchando();
                 var escuchando = setInterval(loadEscuchando, 5000);
+                var playlist = setInterval(loadPlaylist, 2000);
                 //loadEscuchando();
 
                 $('#search').submit(function() {
@@ -205,7 +210,18 @@ UL_checkAuth(_conf("defaultDB"));
                  /*SCROLL*/
                  $('.contenedor_resultados').jScrollPane();
                  $('.contenedor_playlist').jScrollPane();
-            })
+                 $('.contenedor_chat').jScrollPane();
+                 $("#webticker").webTicker({
+                    speed: 50, //pixels per second
+                    direction: "left", //if to move left or right
+                    moving: true, //weather to start the ticker in a moving or static position
+                    startEmpty: false, //weather to start with an empty or pre-filled ticker
+                    duplicate: false, //if there is less items then visible on the ticker you can duplicate the items to make it continuous
+                    rssurl: false, //only set if you want to get data from rss
+                    rssfrequency: 0, //the frequency of updates in minutes. 0 means do not refresh
+                    updatetype: "reset" //how the update would occur options are "reset" or "swap"
+                }); 
+            });
 
         </script>
     </head>
@@ -229,7 +245,13 @@ UL_checkAuth(_conf("defaultDB"));
             </div>
         </div>
         
-        <div class="nowplaying" id="escuchando"></div>
+        <div class="nowplaying">
+            <div class="mascara">
+                <ul id="webticker">
+                    <li id="escuchando"></li> 
+                </ul>
+            </div>
+        </div>
         
         <h1 class="tit_playlist"><img src="images/tit_playlist.png" alt="Playlist"/></h1>
         <div class="playlist">
@@ -249,7 +271,7 @@ UL_checkAuth(_conf("defaultDB"));
             </form>
             </div>
 
-        <EMBED allowScriptAccess="always" allowNetworking="all" src="http://seven.flash-gear.com/lts/lts.php?c=f&o=1&id=3949813&k=6105848" quality=high wmode=transparent scale=noscale salign=LT bgcolor="FFFFFF" WIDTH="450" HEIGHT="400" NAME="lts124393" ALIGN="" TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer" />
+        <!--<EMBED allowScriptAccess="always" allowNetworking="all" src="http://seven.flash-gear.com/lts/lts.php?c=f&o=1&id=3949813&k=6105848" quality=high wmode=transparent scale=noscale salign=LT bgcolor="FFFFFF" WIDTH="450" HEIGHT="400" NAME="lts124393" ALIGN="" TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer" />-->
         
        </div>
     </body>

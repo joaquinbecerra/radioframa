@@ -11,6 +11,7 @@
 }
 .jspPane {
     position: absolute;
+    border-bottom: none !important;
 }
 .jspVerticalBar {
     position: absolute;
