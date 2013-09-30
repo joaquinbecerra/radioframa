@@ -126,6 +126,9 @@ switch ($doWhat){
     case "rf_nowPlaying":
         echo rf_getNowPlaying($id);
         break;
+    case "rf_nowPlayingF":
+        echo rf_getNowPlayingF();
+        break;
     case "rf_updatenowPlaying":
         echo rf_updateNowPlaying($id);
         break;
