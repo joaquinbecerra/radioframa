@@ -17,36 +17,23 @@ UL_checkAuth(_conf("defaultDB"));
     <head>
         <title>Radio Frama</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="player/skin/pink.flag/jplayer.pink.flag.css" rel="stylesheet" type="text/css" />
-        
         <link type="text/css" rel="stylesheet" href="css/estilos.css" media="all" />
-
-
-
-
-        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
-
         <link type="text/css" rel="stylesheet" href="css/jquery.scrollpane.css" media="all" />
+        <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
         <script type="text/javascript" src="js/jquery.mousewheel.js"></script> 
         <script type="text/javascript" src="js/jquery.jscrollpane.js"></script> 
         <script type="text/javascript" src="js/jquery.newsticker.js"></script> 
         <script type="text/javascript">
 
-            var chattime = 0;
-            var updateplay = 0;
-            var songId = 0;
-
+            var chattime=0;
             function loadPlaylist() {
 
                 $.getJSON('index.php?doWhat=rf_getPlaylistDetail', function(data) {
                     var html = '';
-
                     /*RESET SCROLLPANE*/
                         var container = $('.contenedor_playlist').jScrollPane();
                         var api = container.data('jsp');
                         api.destroy();
-
                     for (var i = 0; i < data.length; i++) {
                         html += "<div>";
                         html += "<b>" + data[i].songName + "</b>";
@@ -62,29 +49,6 @@ UL_checkAuth(_conf("defaultDB"));
                     $('.contenedor_playlist').jScrollPane();
                 })
 
-            }
-
-            function loadSong() {
-
-                $.getJSON('index.php?doWhat=rf_nowPlayingF', function(data) {
-                    //console.log(data);
-                    if (!data)
-                        return;
-                    if (data.songId == songId) {
-                        // $("#jquery_jplayer_1").jPlayer("pause", parseInt(data.time,10));
-                        // console.log(typeof parseInt(data.time,10));
-                        return;
-                    }
-
-                    $("#jquery_jplayer_1").jPlayer("setMedia", {
-                        mp3: data.filename
-                    });
-                    console.log(data.time);
-
-                    $("#jquery_jplayer_1").jPlayer("play", parseInt(data.time, 10) + 3);
-
-                    songId = data.songId;
-                })
             }
 
             function loadEscuchando() {
@@ -112,7 +76,6 @@ UL_checkAuth(_conf("defaultDB"));
                 })
 
             }
-
             
             function updateChat(){
             
@@ -130,24 +93,23 @@ UL_checkAuth(_conf("defaultDB"));
                         html+=': '+data[i].msg;
                         html+='</div>';
                         chattime=data[i].id;
-
                     }
-
+                    
                     //console.log(html);
                     //chattime=data[i].id;
                     $('#chat').append(html).scrollTop($('#chat')[0].scrollHeight);
                     $('.contenedor_chat').jScrollPane();
                 });
             }
-
-            function Chat() {
-
-                var msg = $('#chattext').val();
+            
+            function Chat(){
+                
+                var msg=$('#chattext').val();
                 $('#chattext').val('');
-                $.getJSON('index.php?doWhat=rf_sendMessages&msg=' + msg, function(data) {
-                    chattime = data.id;
-
-
+                $.getJSON('index.php?doWhat=rf_sendMessages&msg='+msg, function(data) {                    
+                    chattime=data.id;
+                    
+                   
                 });
             }
 
@@ -227,51 +189,24 @@ UL_checkAuth(_conf("defaultDB"));
                     return false;
                 })
 
+                
 
-
-                $('#chatinput').submit(function() {
-
-                    Chat();
-                    updateChat();
-                    return false;
-
+                $('#chatinput').submit( function(){
+                    
+                   Chat();
+                   updateChat();
+                   return false;
+                    
                 });
-
+                
                 updateChat();
                 var chatup = setInterval(updateChat, 5000);
-
+                
                 /*$('.addToPlaylist').on('click',function(){
                  alert('ya');
                  addToPlaylist(this);
                  return false;
                  });*/
-
-
-                $('#musicOn').click(function() {
-                    $('.musicOn').show();
-                    loadSong();
-                    updateplay = setInterval(loadSong, 2000);
-                    $('.musicOff').hide()
-                })
-
-                $('#musicOff').click(function() {
-                    $("#jquery_jplayer_1").jPlayer("pause");
-                    songId = 0;
-                    clearInterval(updateplay);
-                    $('.musicOff').show();
-                    $('.musicOn').hide();
-                })
-
-                $("#jquery_jplayer_1").jPlayer({
-                    swfPath: "js/",
-                    supplied: "mp3",
-                    smoothPlayBar: true,
-                    keyEnabled: true,
-                    audioFullScreen: true,
-                });
-
-            })
-
                  /*SCROLL*/
                  $('.contenedor_resultados').jScrollPane();
                  $('.contenedor_playlist').jScrollPane();
@@ -288,12 +223,10 @@ UL_checkAuth(_conf("defaultDB"));
                 }); 
             });
 
-
         </script>
     </head>
     <body>
         <div class="container">
-
         <div class="logout">
             <a id="logOut" href="#"> Cerrar Sesión</a>
             <h1 class="tit_logout"><img src="images/tit_logout.png" alt="Logout"/></h1>        
@@ -308,47 +241,8 @@ UL_checkAuth(_conf("defaultDB"));
             <div class="resultados" >
                 <div id="results" class="contenedor_resultados">
                     
-
                 </div>
-
-
             </div>
-
-            <div class="play" style='position:relative;'>
-                <div class='musicOff' style='position:absolute;width: 100% ;height: 100% ; background: black;z-index: 2'>
-                    <a href='#' id='musicOn'>Encender</a>
-                </div>
-                <div class='musicOn'>
-                    <a href='#' id='musicOff'>Apagar</a>
-
-                    <div id="jquery_jplayer_1" class="jp-jplayer_"></div>
-
-                    <div id="jp_container_1" class="jp-audio">
-                        <div class="jp-type-single">
-                            <div class="jp-gui_ jp-interface " style='height: 0px;'>
-                                <ul class="jp-controls"  style='height: 0px;padding:0'>
-                                    <li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
-                                    <li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
-                                    <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
-                                </ul>
-                                <div class="jp-volume-bar">
-                                    <div class="jp-volume-bar-value"></div>
-                                </div>                    
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="nowplaying" id="escuchando"></div>
-
-            <div class="playlist">
-                <div id="playlist" class="contenedor_playlist">
-
-                </div>
-
         </div>
         
         <div class="nowplaying">
@@ -363,27 +257,23 @@ UL_checkAuth(_conf("defaultDB"));
         <div class="playlist">
             <div id="playlist" class="contenedor_playlist">
                 
-
             </div>
+        </div>
 
 
         <h1 class="tit_mensajes"><img src="images/tit_mensajes.png" alt="Mensajes"/></h1>
             <div class="chat_mjes" >
                 <div  id="chat" class="contenedor_chat" >
-
+                    
                 </div>
             <form id="chatinput" >
                 <input type="text" id="chattext" class="texto_chat"/>
             </form>
-
-        </div>
-
             </div>
 
         <!--<EMBED allowScriptAccess="always" allowNetworking="all" src="http://seven.flash-gear.com/lts/lts.php?c=f&o=1&id=3949813&k=6105848" quality=high wmode=transparent scale=noscale salign=LT bgcolor="FFFFFF" WIDTH="450" HEIGHT="400" NAME="lts124393" ALIGN="" TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer" />-->
         
        </div>
-
     </body>
 
 

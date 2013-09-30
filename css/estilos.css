@@ -38,7 +38,7 @@ h1.tit_playlist{
     height: 49px;
     color:white;
     float: right;
-    margin-top: 25px;
+    margin-top: 100px;
     margin-right: 80px;
     overflow:hidden;
 }
@@ -205,7 +205,6 @@ input.texto_chat{
     outline: none;
 }
 
-
 embed{
     float: right;
     width: 390px;
@@ -213,4 +212,3 @@ embed{
     height: 190px;
     margin-top: 10px;
 }
-
