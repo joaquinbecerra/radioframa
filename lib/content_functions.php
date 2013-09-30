@@ -416,6 +416,37 @@ function getNowPlaying($lastID) {
     return $html;
 }
 
+function rf_getNowPlayingF(){
+
+    $sql='select 
+    s.songID as songId,
+    s.file as file,
+    TIMESTAMPDIFF(SECOND,n.startTime,now()) as time
+    from
+        nowPlaying n,
+        songs s
+    where
+        n.songID = s.songID   
+    order by n.id desc
+    limit 1';
+    
+    $a = dosql($sql);
+    //var_dump($a);
+    $res=array();
+    if ($a) {
+       
+            
+            $res=Array('songId'=>$a['songIds'][0],
+                    'time'=> $a['times'][0],
+                    'filename'=> str_replace(realpath(__DIR__.'/..').'/','',strrev(stripcslashes($a['files'][0]))),
+                    );            
+    }
+        //var_dump($res);
+    return json_encode($res);
+    
+        
+}
+
 function rf_getNowPlaying($lastID) {
     //First do a little cleanup on the table if needed.
     $recentness = _conf("nowPlayingRecentness");
