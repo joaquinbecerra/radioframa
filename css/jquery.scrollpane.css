@@ -27,7 +27,11 @@
     left: 0;
     width: 100%;
     height: 16px;
-    background: red;
+    
+}
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspCorner{
+    display:none;
 }
 .jspVerticalBar *,
 .jspHorizontalBar * {
