@@ -8,9 +8,9 @@ require_once("lib/dbLogin.php");
 require_once("lib/UL_userLogin.php");
 UL_checkAuth(_conf("defaultDB"));
 
-if (!UL_ISADMIN) {
-    die('Fuera de aqui raton!');
-}
+//if (!UL_ISADMIN) {
+//    die('Fuera de aqui raton!');
+//}
 ?>
 <!DOCTYPE html>
 <html>

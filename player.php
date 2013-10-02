@@ -30,8 +30,10 @@ require_once("lib/dbLogin.php");
         <link href="js/prettify/prettify-jPlayer.css" rel="stylesheet" type="text/css" />
         <link href="player/skin/pink.flag/jplayer.pink.flag.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        
         <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
         <script type="text/javascript" src="js/jplayer.playlist.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
         <!--<script type="text/javascript" src="js/jquery.jplayer.inspector.js"></script>
         <script type="text/javascript" src="js/themeswitcher.js"></script>-->
         <style>
@@ -185,7 +187,7 @@ require_once("lib/dbLogin.php");
             }
 
             $(document).ready(function() {
-
+                               
                 myPlaylist = new jPlayerPlaylist({
                     jPlayer: "#jquery_jplayer_N",
                     cssSelectorAncestor: "#jp_container_N"
@@ -243,6 +245,17 @@ require_once("lib/dbLogin.php");
 
                 var updateplay = setInterval(updatePlaylist, 5000);
 
+
+                /** DRAG AND DROP**/
+                
+//                $("#test-list").sortable({ 
+//                    handle : 'div', 
+//                    update : function () { 
+//                        var order = $('#test-list').sortable('serialize'); 
+//                        $("#info").load("update_list.php?"+order);
+//                        console.log(order);
+//                    } 
+//                }); 
 
             });
             //]]>
@@ -302,7 +315,7 @@ require_once("lib/dbLogin.php");
                     </div>
                 </div>
                 <div class="jp-playlist">
-                    <ul>
+                    <ul id="test-list">
                         <!-- The method Playlist.displayPlaylist() uses this unordered list -->
                         <li></li>
                     </ul>
@@ -319,7 +332,7 @@ require_once("lib/dbLogin.php");
         <a id="clear" href="#" > Borrar Todos</a> &nbsp;&nbsp;&nbsp;
         
     </div>
-
+        <div id="info"></div>
     </body>
 
 
