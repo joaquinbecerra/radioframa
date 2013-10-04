@@ -105,6 +105,8 @@ if(isset($_REQUEST['playlistID'])) $playlistID=scrubTextIn($_REQUEST['playlistID
 if(isset($_REQUEST['chattime'])) $chattime=scrubTextIn($_REQUEST['chattime'],1);
 if(isset($_REQUEST['msg'])) $msg=mysql_real_escape_string ($_REQUEST['msg']);
 
+if(isset($_REQUEST['pl'])) $pl=mysql_real_escape_string ($_REQUEST['pl']);
+
 ### fin Alain
 $playListType="";
 
@@ -233,6 +235,11 @@ switch ($doWhat){
     case "rf_getMessages":
         
         echo rf_getMessages($id);
+        break;
+    case "rf_setPlOrder":
+        require_once("lib/playlist_functions.php");
+
+        echo rf_setPlOrder($pl);
         break;
     case "getDivContent":
         echo $_REQUEST['content'];

@@ -1,21 +1,16 @@
-<?php 
-
-
+<?php
 session_start();
 
 require_once("lib/dbLogin.php");
 
 
 
-	require_once("lib/UL_userLogin.php");
-        UL_checkAuth(_conf("defaultDB"));
-   
-        if(!UL_ISADMIN){
-            die('Fuera de aqui raton!');
-            
-        }
+require_once("lib/UL_userLogin.php");
+UL_checkAuth(_conf("defaultDB"));
 
-        
+if (!UL_ISADMIN) {
+    die('Fuera de aqui raton!');
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,6 +25,7 @@ require_once("lib/dbLogin.php");
         <link href="js/prettify/prettify-jPlayer.css" rel="stylesheet" type="text/css" />
         <link href="player/skin/pink.flag/jplayer.pink.flag.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.10.3.custom.min.js"></script>
         <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
         <script type="text/javascript" src="js/jplayer.playlist.js"></script>
         <!--<script type="text/javascript" src="js/jquery.jplayer.inspector.js"></script>
@@ -57,85 +53,111 @@ require_once("lib/dbLogin.php");
             //<![CDATA[
 
             var myPlaylist;
+            var espera = false;
 
             function PlayNowChange(tipo) {
 
+                if (espera)
+                    return;
+                espera = true;
+
                 var index = myPlaylist.current;
                 var id = myPlaylist.playlist[index].songId;
-                $.get('index.php?doWhat=rf_updatenowPlaying&id=' + id);
-                
-               
+
+                $.get('index.php?doWhat=rf_updatenowPlaying&id=' + id, function() {
+                    espera = false;
+                });
+
+
                 //si cambio porque termino el tema anterior
-                if( tipo=='ended'){
-                    if (index-1<0)
-                        index=1;
-                    myPlaylist.remove(index-1);
-                    RemoveItem(index-1);
+                if (tipo == 'ended') {
+                    if (index - 1 < 0)
+                        index = 1;
+                    myPlaylist.remove(index - 1);
+                    RemoveItem(index - 1);
                 }
 
             }
 
             function RemoveItem(index) {
 
-              // console.log(index);
-
+                // console.log(index);
+                if (espera)
+                    return;
+                espera = true;
                 var id = myPlaylist.playlist[index].itemId;
-                $.get('index.php?doWhat=rf_deletePlaylistItem&id=' + id);
+                $.get('index.php?doWhat=rf_deletePlaylistItem&id=' + id, function() {
+                    espera = false
+                });
 
-                
+
             }
-            
+
             function Clear() {
-                
-                if(confirm('Estas seguro??')){
-                    
-                    
-                    $.get('index.php?doWhat=rf_clearPlaylist',function(){
-                        
-                     myPlaylist.setPlaylist([]);
-                     
+
+                if (espera)
+                    return;
+                espera = true;
+                if (confirm('Estas seguro??')) {
+
+
+                    $.get('index.php?doWhat=rf_clearPlaylist', function() {
+                        espera = false
+                        myPlaylist.setPlaylist([]);
+
                     });
-                    
+
                 }
 
-               
-               
+
+
 
 
             }
-            
-            function upItem(index) {
 
-              //  console.log(index);
+//            function upItem(index) {
+//
+//                //  console.log(index);
+//                if (espera)
+//                    return;
+//                espera = true;
+//                $.get('index.php?doWhat=rf_upPlaylistItem&id=' + index, function() {
+//                    espera = false
+//                });
+//
+//
+//            }
+//
+//            function downItem(index) {
+//
+//                // console.log(index);
+//                if (espera)
+//                    return;
+//                espera = true;
+//                $.get('index.php?doWhat=rf_downPlaylistItem&id=' + index, function() {
+//                    espera = false
+//                });
+//
+//
+//            }
 
-                $.get('index.php?doWhat=rf_upPlaylistItem&id=' + index);
+            function logOut() {
 
+                $.get('index.php?UL_logoff=1', function() {
 
-            }
-            
-            function downItem(index) {
-
-               // console.log(index);
-
-                $.get('index.php?doWhat=rf_downPlaylistItem&id=' + index);
-
-
-            }
-            
-            function logOut(){
-                $.get('index.php?UL_logoff=1',function(){
-                    
                     window.location.assign('player.php');
-                    
+
                 });
             }
 
             function updatePlaylist() {
-
+                if (espera)
+                    return;
+                espera = true;
                 $.getJSON('index.php?doWhat=rf_getPlaylistAdmin', function(data) {
                     //var pl = myPlaylist.playlist;
-                    
-                    
+
+                    espera = false;
                     var pl = [];
                     for (var i = 0; i < data.length; i++) {
                         //console.log(data['filename']);
@@ -144,6 +166,7 @@ require_once("lib/dbLogin.php");
                             mp3: data[i].filename,
                             songId: data[i].songId,
                             itemId: data[i].itemId,
+                            userName:data[i].userName
                         });
 
 
@@ -151,36 +174,89 @@ require_once("lib/dbLogin.php");
 
                     }
                     //console.log(pl);
-                    myPlaylist.playlist=pl;
+                    myPlaylist.playlist = pl;
                     myPlaylist._refresh(true);
                     myPlaylist._highlight(myPlaylist.current);
-                    
+
                     /*for (var i = 0; i < data.length; i++) {
-                        var esta = false;
-                        for (var j = 0; j < pl.length; j++) {
-
-                            if (pl[j].songId == data[i].songId) {
-                                esta = true;
-                            }
-
-                        }
-                        if (!esta) {
-
-
-                            //console.log(data['filename']);
-                            myPlaylist.add({title: data[i].title,
-                                artist: data[i].album,
-                                mp3: data[i].filename,
-                                songId: data[i].songId,
-                                itemId: data[i].itemId,
-                            });
-                        }
-                        
-
-                    }
-*/
+                     var esta = false;
+                     for (var j = 0; j < pl.length; j++) {
+                     
+                     if (pl[j].songId == data[i].songId) {
+                     esta = true;
+                     }
+                     
+                     }
+                     if (!esta) {
+                     
+                     
+                     //console.log(data['filename']);
+                     myPlaylist.add({title: data[i].title,
+                     artist: data[i].album,
+                     mp3: data[i].filename,
+                     songId: data[i].songId,
+                     itemId: data[i].itemId,
+                     });
+                     }
+                     
+                     
+                     }
+                     */
 
                 })
+
+            }
+
+            var PlaylistResortUI = function(event, ui) {
+                //console.log(ui);
+                espera = true;
+                var pl = [];
+                var s = [];
+                $(".jp-playlist ul li").each(function(index, elem) {
+
+                    var itemid = $(elem).data('itemid');
+                    for (var i = 0; i < myPlaylist.playlist.length; i++) {
+
+                        if (myPlaylist.playlist[i].itemId == itemid) {
+                            pl[index] = myPlaylist.playlist[i];
+                            break;
+                        }
+
+                    }
+                    s.push(itemid);
+                })
+
+                $.get('index.php?doWhat=rf_setPlOrder&pl=' + s.join('_'), function() {
+
+
+                    espera = false;
+
+                });
+                myPlaylist.playlist = pl;
+                myPlaylist._refresh(true);
+                myPlaylist._highlight(myPlaylist.current);
+
+
+            }
+
+            function Shuffle(on) {
+                console.log(on);
+                espera = true;
+                var s = [];
+                
+                $(".jp-playlist ul li").each(function(index, elem) {
+
+                    var itemid = $(elem).data('itemid');
+                   
+                    s.push(itemid);
+                })
+
+                $.get('index.php?doWhat=rf_setPlOrder&pl=' + s.join('_'), function() {
+
+
+                    espera = false;
+
+                });
 
             }
 
@@ -194,8 +270,9 @@ require_once("lib/dbLogin.php");
                     playlistOptions: {
                         enableRemoveControls: true,
                         onPlayNowChange: PlayNowChange,
-                        onUp: upItem,
-                        onDown: downItem,
+                        // onUp: upItem,
+                        // onDown: downItem,
+                        onShuffle: Shuffle,
                         onRemove: RemoveItem
                     },
                     swfPath: "js/",
@@ -218,31 +295,37 @@ require_once("lib/dbLogin.php");
                             mp3: data[i].filename,
                             songId: data[i].songId,
                             itemId: data[i].itemId,
+                            userName: data[i].userName,
                         });
-
-
-
-
                     }
                     //console.log(pl);
                     myPlaylist.setPlaylist(pl);
 
 
                 });
-                $('#logOut').click(function(){
+                $('#logOut').click(function() {
                     alert('chaucito');
                     logOut();
                     return false;
                 });
-                
-                $('#clear').click(function(){
-                    
+
+                $('#clear').click(function() {
+
                     Clear();
                     return false;
                 })
 
                 var updateplay = setInterval(updatePlaylist, 5000);
 
+                //sortable:
+                $(".jp-playlist ul").sortable({
+                    stop: PlaylistResortUI,
+                    start: function() {
+                        espera = true;
+                    }
+                }
+                );
+                $(".jp-playlist ul").disableSelection();
 
             });
             //]]>
@@ -250,11 +333,11 @@ require_once("lib/dbLogin.php");
 
     </head>
     <body  onload="">
-    <div style="font-size:10px; width:480px;text-align: center;" >
-        <a id="logOut" href="#" > Cerrar Sesión</a>
+        <div style="font-size:10px; width:480px;text-align: center;" >
+            <a id="logOut" href="#" > Cerrar Sesión</a>
 
-    </div>
-    
+        </div>
+
 
         <div id="jp_container_N" class="jp-video jp-video-270p">
             <div class="jp-type-playlist">
@@ -314,13 +397,13 @@ require_once("lib/dbLogin.php");
             </div>
         </div></div>
 
- <div style="font-size:10px; width:480px;text-align: center;" >
+    <div style="font-size:10px; width:480px;text-align: center;" >
 
         <a id="clear" href="#" > Borrar Todos</a> &nbsp;&nbsp;&nbsp;
-        
+
     </div>
 
-    </body>
+</body>
 
 
 </html>

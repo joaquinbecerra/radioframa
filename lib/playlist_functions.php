@@ -118,6 +118,16 @@ function rf_loadPlaylistDef(){
         loadPlaylistDef($id);
 }
 
+function rf_setPlOrder($pl){
+    $arr=  preg_split("/_/", $pl);
+    $res=dosql("update playlistItems set seq=seq+1000 where playlistID = (select playlistID from playlists where name = 'radioframa' )");
+    foreach ($arr as $i => $itemId){
+        $seq=$i+1;
+        $res=dosql("update playlistItems set seq=$seq where playlistItemID = $itemId");        
+    }
+    
+}
+
 function rf_getPlaylistAdmin(){
     $playlist=Array();
 //    session_start();
@@ -128,14 +138,17 @@ function rf_getPlaylistAdmin(){
     p.seq as seq,
     s.songName as songName,
     s.file as file,
-    s.albumNameFromTag as albumName
+    s.albumNameFromTag as albumName,
+    u.fname as userName
 from
     playlistItems p,
     playlists pl,
-    songs s
+    songs s,
+    users u
 where
     pl.name = 'radioframa' and 
     p.itemType = 'song'
+    and u.userId=p.user
     and p.itemID = s.songID
     and pl.playlistID=p.playlistID
 order by seq";
@@ -149,7 +162,8 @@ order by seq";
                         'album'=>$albumNames[$i],
                          'filename'=> str_replace(realpath(__DIR__.'/..').'/','',strrev(stripcslashes($files[$i]))),
                         'songId'=>$songIds[$i],
-                        'itemId'=>$itemIds[$i]
+                        'itemId'=>$itemIds[$i],
+                        'userName'=>$userNames[$i]
                         );
                     
                 }
