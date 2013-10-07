@@ -122,10 +122,18 @@
 
         $(this.cssSelector.shuffle).click(function() {
             self.shuffle(true);
+            var onShuffle = self.option('onShuffle');
+            if (onShuffle && $.isFunction(onShuffle)) {
+                onShuffle(true);
+            }
             return false;
         });
         $(this.cssSelector.shuffleOff).click(function() {
             self.shuffle(false);
+            var onShuffle = self.option('onShuffle');
+            if (onShuffle && $.isFunction(onShuffle)) {
+                onShuffle(false);
+            }
             return false;
         }).hide();
 
@@ -253,14 +261,15 @@
             var self = this;
 
             // Wrap the <li> contents in a <div>
-            var listItem = "<li><div>";
+            if (media.itemId)
+            var listItem = "<li data-itemid='"+media.itemId+"'><div>";
 
             // Create remove control
             listItem += "<a href='javascript:;' class='" + this.options.playlistOptions.removeItemClass + "'>&times;</a>";
             // Create up control
-            listItem += "<a href='javascript:;' class='" + this.options.playlistOptions.upItemClass + "'>&uArr;</a>";
+          //  listItem += "<a href='javascript:;' class='" + this.options.playlistOptions.upItemClass + "'>&uArr;</a>";
             // Create down control
-            listItem += "<a href='javascript:;' class='" + this.options.playlistOptions.downItemClass + "'>&dArr;</a>";
+          //  listItem += "<a href='javascript:;' class='" + this.options.playlistOptions.downItemClass + "'>&dArr;</a>";
 
             // Create links to free media
             if (media.free) {
@@ -280,7 +289,7 @@
             }
 
             // The title is given next in the HTML otherwise the float:right on the free media corrupts in IE6/7
-            listItem += "<a href='javascript:;' class='" + this.options.playlistOptions.itemClass + "' tabindex='1'>" + media.title + (media.artist ? " <span class='jp-artist'>by " + media.artist + "</span>" : "") + "</a>";
+            listItem += "<a href='javascript:;' class='" + this.options.playlistOptions.itemClass + "' tabindex='1'>" + media.title + (media.artist ? " <span class='jp-artist'>by " + media.artist + " ("+media.userName+ ")</span>" : "") +"</a>";
             listItem += "</div></li>";
 
             return listItem;
