@@ -66,9 +66,11 @@ if (!UL_ISADMIN) {
 
                 $.get('index.php?doWhat=rf_updatenowPlaying&id=' + id, function() {
                     espera = false;
+                    
+                   
+                
                 });
-
-
+                espera=false;
                 //si cambio porque termino el tema anterior
                 if (tipo == 'ended') {
                     if (index - 1 < 0)
@@ -76,6 +78,8 @@ if (!UL_ISADMIN) {
                     myPlaylist.remove(index - 1);
                     RemoveItem(index - 1);
                 }
+                
+                
 
             }
 
