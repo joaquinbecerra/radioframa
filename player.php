@@ -66,11 +66,11 @@ if (!UL_ISADMIN) {
 
                 $.get('index.php?doWhat=rf_updatenowPlaying&id=' + id, function() {
                     espera = false;
-                    
-                   
-                
+
+
+
                 });
-                espera=false;
+                espera = false;
                 //si cambio porque termino el tema anterior
                 if (tipo == 'ended') {
                     if (index - 1 < 0)
@@ -78,8 +78,8 @@ if (!UL_ISADMIN) {
                     myPlaylist.remove(index - 1);
                     RemoveItem(index - 1);
                 }
-                
-                
+
+
 
             }
 
@@ -112,6 +112,8 @@ if (!UL_ISADMIN) {
                     });
 
                 }
+                else
+                    espera = false;
 
 
 
@@ -170,7 +172,7 @@ if (!UL_ISADMIN) {
                             mp3: data[i].filename,
                             songId: data[i].songId,
                             itemId: data[i].itemId,
-                            userName:data[i].userName
+                            userName: data[i].userName
                         });
 
 
@@ -247,25 +249,50 @@ if (!UL_ISADMIN) {
                 console.log(on);
                 espera = true;
                 var s = [];
-                
+
                 $(".jp-playlist ul li").each(function(index, elem) {
 
                     var itemid = $(elem).data('itemid');
-                   
+
                     s.push(itemid);
                 })
 
                 $.get('index.php?doWhat=rf_setPlOrder&pl=' + s.join('_'), function() {
 
 
-                    espera = false;
+                    espera = true;
 
                 });
 
             }
 
+            function MasEscuchados() {
+                if (confirm('Estas seguro?? esto borra la playlist!')) {
+                    if (espera)
+                        return;
+                    espera = true;
+
+                    $.get('index.php?doWhat=rf_setMasEscuchados&tipo=escuchados', function(data) {
+                        espera = false;
+                        updatePlaylist();
+                    });
+                }
+            }
+
+            function MasPedidos() {
+                if (confirm('Estas seguro?? esto borra la playlist!')) {
+                    if (espera)
+                        return;
+                    espera = true;
+                    $.get('index.php?doWhat=rf_setMasEscuchados&tipo=pedidos', function(data) {
+                        espera = false;
+                        updatePlaylist();
+                    });
+                }
+            }
+
             $(document).ready(function() {
-                               
+
                 myPlaylist = new jPlayerPlaylist({
                     jPlayer: "#jquery_jplayer_N",
                     cssSelectorAncestor: "#jp_container_N"
@@ -317,7 +344,20 @@ if (!UL_ISADMIN) {
 
                     Clear();
                     return false;
+                });
+
+                $('#mas_escuchados').click(function() {
+
+                    MasEscuchados();
+                    return false;
                 })
+
+                $('#mas_pedidos').click(function() {
+
+                    MasPedidos();
+                    return false;
+                })
+
 
                 var updateplay = setInterval(updatePlaylist, 5000);
 
@@ -332,7 +372,7 @@ if (!UL_ISADMIN) {
                 $(".jp-playlist ul").disableSelection();
 
                 /** DRAG AND DROP**/
-                
+
 //                $("#test-list").sortable({ 
 //                    handle : 'div', 
 //                    update : function () { 
@@ -415,11 +455,13 @@ if (!UL_ISADMIN) {
     <div style="font-size:10px; width:480px;text-align: center;" >
 
         <a id="clear" href="#" > Borrar Todos</a> &nbsp;&nbsp;&nbsp;
+        <a id="mas_escuchados" href="#" > Los Mas Escuchados</a> &nbsp;&nbsp;&nbsp;
+        <a id="mas_pedidos" href="#" > Los Mas Pedidos</a> &nbsp;&nbsp;&nbsp;
 
     </div>
 
-        <div id="info"></div>
-    </body>
+    <div id="info"></div>
+</body>
 
 
 </html>

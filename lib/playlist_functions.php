@@ -299,6 +299,59 @@ function getPlaylistHTML(){//create the html display for passed playlist obj
 function getFormattedName($item){
 	return $item['itemName']."<font class='tiny'>(".$item['itemType'].")</font>";
 }
+
+
+function rf_setMasEscuchados($tipo){
+    
+    $uid=0;
+    if(UL_UID)
+         $uid=UL_UID;
+    
+    if($tipo=='escuchados')
+        $tipo='temaEscuchado';
+    if($tipo=='pedidos')
+        $tipo='temaPedido';
+    
+    $plid=$_SESSION['pl']['playlistID'];
+    
+    dosql("delete from playlistItems where playlistId = $plid;",0);
+    
+    
+   
+  $sql="insert into playlistItems select 0,$plid,'song',itemID, - sum(count ),$uid 
+            from statistics where type='$tipo'
+            group by 1,2,3,4,6
+            order by sum(count ) desc limit 50;";
+    dosql($sql,0);
+    
+    $ok=dosql("SET @r=0;"); 
+    $ok=dosql("UPDATE playlistItems SET seq=  where playlistID=$plid ORDER BY seq asc;");
+    
+    return $res;
+    
+}
+
+
+function rf_addItemToPlaylist($type,$id,$returnJS=false){
+    
+    
+    $res=addItemToPlaylist($type,$id,$returnJS);
+    //actualizacion de estadisticas
+    $uid=0;
+    if(UL_UID)
+         $uid=UL_UID;
+    
+    $existe=dosql("SELECT count FROM statistics where userID =$uid and type='temaPedido' and itemId=$id;",0);
+    if (!$existe)
+        dosql("insert into statistics values('temaPedido', $id ,$uid, 1 , now());",0);
+    else
+        dosql("update statistics set count=count+1 where userID =$uid and type='temaPedido' and itemId=$id;",0);
+    
+    return $res;
+    
+}
+
+
 function addItemToPlaylist($type,$id,$returnJS=false){
     /*This adds passed item (song, album, artist, genre) to the currently loaded playlist.*/
     $ret=false;

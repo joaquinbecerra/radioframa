@@ -518,6 +518,17 @@ function rf_updateNowPlaying($songId) {
         where songId=$songId and p.itemId=$songId limit 1;
         "); //Prune out old entries.
  
+    $uid= dosql("select  user from playlistItems i, playlists pl
+        where pl.playlistId = i.playlistId and pl.name='radioframa'
+        and itemID=230471 limit 1;",0);
+    
+    //echo $uid;
+    
+     $existe=dosql("SELECT count FROM statistics where userID =$uid and type='temaEscuchado' and itemId=$songId;",0);
+    if (!$existe)
+        dosql("insert into statistics values('temaEscuchado', $songId, $uid , 1 , now());",0);
+    else
+        dosql("update statistics set count=count+1 where userID =$uid and type='temaEscuchado' and itemId=$songId;",0);
     return;
 }
 

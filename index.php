@@ -104,6 +104,7 @@ if(isset($_REQUEST['first'])) $first=scrubTextIn($_REQUEST['first'],1);
 if(isset($_REQUEST['playlistID'])) $playlistID=scrubTextIn($_REQUEST['playlistID'],1);
 if(isset($_REQUEST['chattime'])) $chattime=scrubTextIn($_REQUEST['chattime'],1);
 if(isset($_REQUEST['msg'])) $msg=mysql_real_escape_string ($_REQUEST['msg']);
+if(isset($_REQUEST['tipo'])) $tipo=mysql_real_escape_string ($_REQUEST['tipo']);
 
 if(isset($_REQUEST['pl'])) $pl=mysql_real_escape_string ($_REQUEST['pl']);
 
@@ -133,6 +134,10 @@ switch ($doWhat){
         break;
     case "rf_updatenowPlaying":
         echo rf_updateNowPlaying($id);
+        break;
+    case "rf_setMasEscuchados":
+         require_once("lib/playlist_functions.php");
+        echo rf_setMasEscuchados($tipo);
         break;
     case "getRandomBrowsingTabObj":
 	echo getRandomBrowsingTabObj();
@@ -484,7 +489,7 @@ switch ($doWhat){
         break;
     case "rf_addToPlaylist":
         require_once("lib/playlist_functions.php");
-        echo addItemToPlaylist('song',$id,true);
+        echo rf_addItemToPlaylist('song',$id,true);
         break;
     case "savePlaylist":
         require_once("lib/playlist_functions.php");
