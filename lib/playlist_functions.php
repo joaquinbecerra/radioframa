@@ -334,6 +334,12 @@ function rf_setMasEscuchados($tipo){
 
 function rf_addItemToPlaylist($type,$id,$returnJS=false){
     
+    $existe=dosql("select itemID from playlistItems i, playlists pl
+where pl.playlistId = i.playlistId and pl.name='radioframa' and itemID=$id;",0);
+    
+    if($existe)
+        return false;
+    
     
     $res=addItemToPlaylist($type,$id,$returnJS);
     //actualizacion de estadisticas
