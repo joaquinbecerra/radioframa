@@ -7,9 +7,9 @@
 
 
 ;Mysql user/password/db.  You must set up a user that can admin a db in mysql.  Enter the user/pass/db(schema) below.  Your web users for tcj are handled in the application.
-username = "radioframa"
-password = "radioframa"
-defaultDB = "radioframa"
+username = "root"
+password = ""
+defaultDB = "jukebox"
 
 
 

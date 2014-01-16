@@ -1,0 +1,9 @@
+10-15-13 12:30:08	192.168.1.134	INFO	mframarini	Log In	
+10-15-13 12:30:10	192.168.1.134	INFO	mframarini	Listing plugins	
+10-15-13 12:30:10	192.168.1.134	INFO	mframarini	Listing plugins	
+10-15-13 12:30:10	192.168.1.134	INFO	mframarini	Listing plugins	
+10-15-13 12:31:02	192.168.1.134	INFO	mframarini	Edit Repository	repo_name=Musica
+10-15-13 12:32:22	192.168.1.134	INFO	general	Log In	
+10-15-13 12:32:52	192.168.1.134	INFO	mframarini	Switch Repository	rep. id=8a9756f250a57610b786e9b3c68a7fa8
+10-15-13 12:33:51	192.168.1.134	INFO	mframarini	Switch Repository	rep. id=ajxp_shared
+10-15-13 12:41:52	192.168.1.134	INFO	mframarini	Switch Repository	rep. id=ajxp_conf

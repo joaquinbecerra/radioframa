@@ -73,10 +73,11 @@ if (!UL_ISADMIN) {
                 espera = false;
                 //si cambio porque termino el tema anterior
                 if (tipo == 'ended') {
+                    console.log(index);
                     if (index - 1 < 0)
                         index = 1;
                     myPlaylist.remove(index - 1);
-                    RemoveItem(index - 1);
+                    RemoveItem(index - 1);z
                 }
 
 
