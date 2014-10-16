@@ -205,10 +205,17 @@ input.texto_chat{
     outline: none;
 }
 
-embed{
+.extra{
     float: right;
     width: 390px;
     margin-right: 70px;
     height: 190px;
     margin-top: 10px;
+}
+
+.extra img{
+    max-width: 390px;
+}
+.zoomContainer{
+    cursor: none;
 }

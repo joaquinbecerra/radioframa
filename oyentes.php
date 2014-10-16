@@ -24,6 +24,7 @@ UL_checkAuth(_conf("defaultDB"));
         <script type="text/javascript" src="js/jquery.mousewheel.js"></script> 
         <script type="text/javascript" src="js/jquery.jscrollpane.js"></script> 
         <script type="text/javascript" src="js/jquery.newsticker.js"></script> 
+        <script type="text/javascript" src="js/jquery.elevateZoom-3.0.8.min.js"></script> 
         <script type="text/javascript">
 
             var chattime=0;
@@ -222,6 +223,16 @@ UL_checkAuth(_conf("defaultDB"));
                     rssfrequency: 0, //the frequency of updates in minutes. 0 means do not refresh
                     updatetype: "reset" //how the update would occur options are "reset" or "swap"
                 }); 
+
+            /*Elevate Zoom*/
+
+            $("#zoom").elevateZoom({
+              zoomType              : "lens",
+              lensShape : "round",
+              lensSize    : 200,
+              scrollZoom : true
+            });
+                 
             });
 
         </script>
@@ -271,9 +282,9 @@ UL_checkAuth(_conf("defaultDB"));
                 <input type="text" id="chattext" class="texto_chat"/>
             </form>
             </div>
-
-        <EMBED allowScriptAccess="always" allowNetworking="all" src="http://seven.flash-gear.com/lts/lts.php?c=f&o=1&id=3949813&k=6105848" quality=high wmode=transparent scale=noscale salign=LT bgcolor="FFFFFF" WIDTH="450" HEIGHT="400" NAME="lts124393" ALIGN="" TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer" />
-<!--<EMBED allowScriptAccess="always" allowNetworking="all" src="http://two.flash-gear.com/npuz/puz.php?c=f&o=1&id=3111187&k=3857981&s=90&w=450&h=270" quality=high wmode=transparent scale=noscale salign=LT bgcolor="FFFFFF" WIDTH="600" HEIGHT="420" NAME="puz165441" ALIGN="" TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer" />-->
+            <div class="extra">
+                <img src="radioframa_imgs/image.jpg" data-zoom-image="radioframa_imgs/image.jpg" id="zoom"/>
+            </div>
         </div>
     </body>
 
