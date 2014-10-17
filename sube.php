@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
     foreach ($_FILES['files']['name'] as $i => $name) {
         if (strlen($_FILES['files']['name'][$i]) > 1) {
-            if (move_uploaded_file($_FILES['files']['tmp_name'][$i], __DIR__ .'/radioframa/music/sugeridos/'.$folder_name.'/'.$name)) {
+            if (move_uploaded_file($_FILES['files']['tmp_name'][$i], __DIR__ .'music/sugeridos/'.$folder_name.'/'.$name)) {
                 $count++;
             }
         }
