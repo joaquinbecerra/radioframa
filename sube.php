@@ -16,7 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
     }
     if (count($_FILES)>0){
-        echo "<script>alert('Subido!')</script>";
+        echo "<script>
+        $.get('index.php?doWhat=rf_clearPlaylist');
+        alert('Subido!');
+        </script>";
     }
 //    var_dump($_FILES);
 }
