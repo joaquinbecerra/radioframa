@@ -4,7 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
     $folder_name=$_POST['folder_name'];
 //    echo $folder_name;
-    mkdir(__DIR__ .'/radioframa/music/sugeridos/'.$folder_name."/",0777);
+    mkdir(__DIR__ .'music/sugeridos/'.$folder_name."/",0777);
     
     foreach ($_FILES['files']['name'] as $i => $name) {
         if (strlen($_FILES['files']['name'][$i]) > 1) {
