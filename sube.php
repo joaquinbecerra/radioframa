@@ -1,20 +1,21 @@
 <?php
+
+umask(002);
+
 $count = 0;
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     
     $folder_name=$_POST['folder_name'];
-//    echo $folder_name;
-    mkdir(__DIR__ .'music/sugeridos/'.$folder_name."/",0777);
+    mkdir('music/sugeridos/' . $folder_name);
     
     foreach ($_FILES['files']['name'] as $i => $name) {
         if (strlen($_FILES['files']['name'][$i]) > 1) {
-            if (move_uploaded_file($_FILES['files']['tmp_name'][$i], __DIR__ .'music/sugeridos/'.$folder_name.'/'.$name)) {
+            if (move_uploaded_file($_FILES['files']['tmp_name'][$i], 'music/sugeridos/'.$folder_name.'/'.$name)) {
                 $count++;
             }
         }
     }
     if (count($_FILES)>0){
-        echo $folder_name;
         echo "<script>alert('Subido!')</script>";
     }
 //    var_dump($_FILES);
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             <h2>Sugeridos</h2>
             <ul>
                 <?php
-                if ($handle = opendir(__DIR__ . 'music/sugeridos/')) {
+                if ($handle = opendir(__DIR__ . '/music/sugeridos/')) {
                     /* This is the correct way to loop over the directory. */
 
                     while (false !== ($entry = readdir($handle))) {
@@ -59,26 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             </ul>
         </div>
 
-<!--        <div>
-            <h2>Playlist</h2>
-            <ul>
-                <?php
-                if ($handle = opendir(__DIR__ . '/playlist/')) {
-                    /* This is the correct way to loop over the directory. */
-
-                    while (false !== ($entry = readdir($handle))) {
-                        $extension = preg_replace('/.*\./', '', $entry);
-
-                        if ($extension == 'mp3' || $extension == 'MP3') {
-                            echo "<li>$entry</li>";
-                        }
-                    }
-
-                    closedir($handle);
-                }
-                ?>
-            </ul>
-        </div>-->
 
 
 
