@@ -14,6 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         }
     }
     if (count($_FILES)>0){
+        echo $folder_name;
         echo "<script>alert('Subido!')</script>";
     }
 //    var_dump($_FILES);
@@ -41,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             <h2>Sugeridos</h2>
             <ul>
                 <?php
-                if ($handle = opendir(__DIR__ . '/radioframa/music/sugeridos/')) {
+                if ($handle = opendir(__DIR__ . 'music/sugeridos/')) {
                     /* This is the correct way to loop over the directory. */
 
                     while (false !== ($entry = readdir($handle))) {
