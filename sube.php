@@ -15,17 +15,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
             }
         }
     }
-    if (count($_FILES)>0){
-        echo "<script>
-        $.get('index.php?doWhat=rf_clearPlaylist');
-        alert('Subido!');
-        </script>";
-    }
-//    var_dump($_FILES);
 }
 ?> 
 
 <html>
+	<head>
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<?php
+    if (count($_FILES)>0){
+        echo "<script>
+	$.get('index.php?doWhat=updateCatalog');
+        alert('Subido!');
+        </script>";
+    }?>
+
+	</head>
     <body>
         <h1>
             Sugerile a Frama
